@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="dbank"
+	monitorInterval="60">
+	<properties>
+		<!-- <property name="LOG_HOME">E:\ebanksvn2\source\dbank\trunk\logs\dbank</property> -->
+		<property name="LOG_HOME">${sys:user.home}/__logs/dbank</property>
+		<property name="LOG_NAME">dbank</property>
+		<property name="LOG_PATTERN">[%.4p|${ctx:quickTrace}|%.10t|%d{HH:mm:ss.SSS} %c{1}:%L|%m]%n</property>
+	</properties>
+
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		
+		<RollingRandomAccessFile name="applog"
+			fileName="${LOG_HOME}/${LOG_NAME}_app.log" filePattern="${LOG_HOME}/${LOG_NAME}_app.log.%d{yyyyMMddHH}-%i">
+<!-- 			<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/> -->
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="2G" />
+			</Policies>
+		</RollingRandomAccessFile>
+		
+		<RollingRandomAccessFile name="errorlog"
+			fileName="${LOG_HOME}/${LOG_NAME}_error.log" filePattern="${LOG_HOME}/${LOG_NAME}_error.log.%d{yyyyMMddHH}-%i">
+ 			<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5M" />
+			</Policies>
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="applog" />
+			<AppenderRef ref="errorlog" />
+		</Root>
+	</Loggers>
+</Configuration>

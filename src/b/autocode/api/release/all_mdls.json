@@ -1,0 +1,18 @@
+{
+    "justMark": "将模块代号全部放在这里进行汇总",
+    
+    "modules": [
+        {
+            "mdlCode": "redEnvelope",
+            "mdlDesc": "行庆红包",
+            "developer": "bxz",
+            "relDate":"20170407"
+        },
+        {
+            "mdlCode": "ecif",
+            "mdlDesc": "ECIF高净值评估",
+            "developer": "yur",
+            "relDate":"20170825" 
+        }
+    ]
+}

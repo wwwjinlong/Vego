@@ -1,0 +1,65 @@
+{
+    "developer":"zhangcq",
+    "moduleName": "数字保管箱",
+    "services": [
+        {
+            "chName": "登录授权",
+            "serviceCode": "AppUserAuth"
+        },
+        {
+            "serviceCode": "BoxApply",
+            "chName": "申请开通"
+        },
+        {
+            "serviceCode": "AppUserBaseInfo",
+            "chName": "客户文件基本信息查询 "
+        },
+        {
+            "serviceCode": "AppDirectoryQuery",
+            "chName": "保管箱基本信息查询"
+        },
+        {
+            "serviceCode": "AppDirectoryQuery",
+            "chName": "按照类别查询文件信息 ",
+            "refUrl":"/file/baseinfo/type/query.do"
+        },
+        {
+            "serviceCode": "AppDirAdd",
+            "chName": "文件夹新增."
+        },
+        {
+            "serviceCode": "AppFileDel",
+            "chName": "文件夹删除."
+        },
+        {
+            "serviceCode":"AppFileMove",
+            "chName": "文件夹移动."
+        },
+        {
+            "serviceCode":"AppFileMove",
+            "chName": "文件夹重命名.",
+            "refUrl":"/file/manager/rename.do"
+        },
+        {
+            "serviceCode": "AppFileSearch",
+            "chName": "文件夹搜索."
+        },
+        {
+            "serviceCode": "AppUpFinish",
+            "chName": "文件上传完成."
+        },
+        {
+            "serviceCode": "AppUserLoginV1",
+            "chName": "数字保管箱登录."
+        },
+        {
+            "serviceCode": "AppUserLoginTestV3",
+            "chName": "API测试."
+        },
+        {
+            "serviceCode": "AppUserLoginTestV3",
+            "refUrl":"/test/api/v1/t.do",
+            "chName": "API测试."
+        },
+    ]
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+			http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd"
+	default-autowire="byName" default-lazy-init="false">
+	<!-- 配置aop -->
+	<!-- <aop:aspectj-autoproxy proxy-target-class="true"/> -->
+
+	<!-- <context:annotation-config /> -->
+	<!-- context:component-scan替代了其功能 -->
+	
+	<!--##### YOUR CONFIG start here #####>>>>> -->
+	<!-- <context:component-scan base-package="ebcs.controller" /> -->
+	<!--##### YOUR CONFIG end here #####<<<<-->
+	
+	<!-- #######平台扫描配置 Controller########## -->
+	<context:component-scan base-package="jplat.service.ctl" />
+	<!-- <context:component-scan base-package="jplat.api.rel.controller" /> -->
+	<context:component-scan base-package="jplat.core.framework.config" />
+	
+	<!-- #####对模型视图名称的解析，即在模型视图名称添加前后缀 跳转到手机页面#### -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/view/jsp/" p:suffix=".jsp" />
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+
+	<!-- ###########配置MultipartResolver 用于文件上传 使用spring的CommosMultipartResolver############ -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="UTF-8" p:maxUploadSize="36700160" p:uploadTempDir="fileUpload/temp1">
+	</bean>
+	
+	<mvc:annotation-driven>
+		<!-- ###消息转换器### -->
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+	
+</beans>

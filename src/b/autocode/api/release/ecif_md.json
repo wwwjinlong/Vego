@@ -1,0 +1,10 @@
+{
+     "developer":"zhangcq",
+    "moduleName": "ecif高净值客户评估",
+     "services": [
+    	{
+            "serviceCode": "ECIFHighWorthAssess",
+            "chName": "高净值客户评估"
+        },
+    ]
+}

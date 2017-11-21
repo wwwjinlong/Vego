@@ -1,0 +1,14 @@
+{
+    "developer":"zhangcq",
+    "moduleName": "登录模块(共3)",
+    "services": [
+        {
+            "serviceCode": "loginDemo9",
+            "chName": "用户登录"
+        },
+        {
+            "serviceCode": "loginDemo",
+            "refUrl":"login/qcustinfo.do"
+        }
+    ]
+}
