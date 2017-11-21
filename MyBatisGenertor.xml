@@ -12,7 +12,7 @@
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
-		<!-- 数据库链接URL、用户名、密码 -->
+		<!-- 数据库链接URL、用户名、密码1 -->
 <!-- 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
 			connectionURL="jdbc:mysql://119.29.198.112:60001/tggdb?characterEncoding=utf8&amp;useSSL=false"
 			userId="tgg" password="tgg123"> -->
