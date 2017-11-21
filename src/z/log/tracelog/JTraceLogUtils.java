@@ -20,7 +20,7 @@ import jplat.tools.string.StringUtil;
 
 public class JTraceLogUtils
 {
-	private static Logger logger = LogManager.getLogger(JSessionUtils.class);
+	private static Logger logger = LogManager.getLogger(JTraceLogUtils.class);
 	
 	/**
 	 * 日志起始标记.

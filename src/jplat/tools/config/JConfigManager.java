@@ -49,17 +49,15 @@ public class JConfigManager
 		JSystemConfig cnf = null;
 		try {
 			cnf = new JSystemConfig();
+			if ( cnf != null )
+			{
+				configEntity = cnf;
+				return true;
+			}
+			
 		} catch (JSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
-			return false;
-		}
-		
-		if ( cnf != null )
-		{
-			configEntity = cnf;
-			return true;
 		}
 		
 		return false;
