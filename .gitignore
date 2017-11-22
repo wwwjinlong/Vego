@@ -64,4 +64,4 @@ $RECYCLE.BIN/
 *.bak
 
 # myadd
-build
+build/
