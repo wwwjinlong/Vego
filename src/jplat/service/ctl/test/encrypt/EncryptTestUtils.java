@@ -1,12 +1,15 @@
 package jplat.service.ctl.test.encrypt;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
-import z.log.tracelog.XLog;
 import jplat.tools.coder.Base64Coder;
 import jplat.tools.encrypt.AESTools;
 import jplat.tools.encrypt.RSATools;
 import jplat.tools.string.JRandomUtil;
+import z.log.tracelog.XLog;
 
 /**
  * 加密构造类.
@@ -25,16 +28,26 @@ public class EncryptTestUtils
 //		testRSA();
 	}
 	
+	public static void testMap()
+	{
+		Map<String,String> map = new HashMap<String,String>();
+		Field[] fds = map.getClass().getDeclaredFields();
+		for ( int i = 0; i < fds.length; ++i )
+		{
+			XLog.log("%d:%s", i,fds[i].getName());
+		}
+	}
+	
 	public static void testAES()
 	{
 
-		String plainText = "S:101111";
-		String aesKey = "2JUsV1qnscFvnkPM";
+		String plainText = "headS:101111";
+		String aesKey = "HrO96bda7XHNOKHx";
 		
 		String cipher = showAESCipher(plainText,aesKey);
-		XLog.log("STAFF cihper:%s", cipher);
+		XLog.log("STAFF cihper:[%s]", cipher);
 		
-		String encData = "CJUCvQ8wsBCwD9UXtU+RSNoqxlc/ssLFVnQIlOqQy7ZJz4JwG67Dy0ePYVxmGx0bEnQA5c2Y5CEli6rm1AKkz1w62m57PXMJpEER2G/vpxknlbNH1QbHgwauzhqqUGpEMY8ezmqsMtZG7Q2lDYHZfCdxP8Fw0+wmxiXkIsu52vng9wiVPyxlptE1k6w0AbS05sJnTFO0FociyKN24oL4Hkh5j+kbKJ/1iEiyLTnfYW1QhfIeYV6kXRX+t2h48T/K";
+		String encData = "wgIcg7BspAg2MoXYjcmoicF838wGTzEvKDH5TpN0YS3NgfHMaCaJ5w40hZj7EsJig1d3VyM0QTpbn3YwCtrt2sV14iuvZjpGhOIiZZhBiLE/HBvxF1eVKNcffxJwnC4fc/je8xh80+/TozCPkmTzV+DDRgJCZdCOZkdKG6UCy9OgO2zyzwJSChkI9tp+snlvn/gOfj+Aa9x2Nl8RAamUWhYBRk8CTczLeMitZreICDtgPnCdIsSIFmqdvulq1U5o";
 		doAESDecrypt(encData,aesKey);
 	
 	}
@@ -67,6 +80,7 @@ public class EncryptTestUtils
 	
 	private static String showAESCipher( String plainText, String aesKey )
 	{
+		plainText = String.format("{\"head\":{},\"body\":{\"text\":\"%s\"}}", plainText);
 		try
 		{
 			String base64Data = Base64Coder.toBase64String(AESTools.encrypt(plainText.getBytes("utf-8"), aesKey));

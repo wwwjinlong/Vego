@@ -1,8 +1,8 @@
 package jplat.tools.encrypt;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import jplat.base.constant.KPlatResponseCode;
 import jplat.tools.config.JConfigManager;
+import jplat.tools.stream.JFileUtils;
 import jplat.tools.string.StringUtil;
 import z.log.tracelog.XLog;
 
@@ -98,9 +99,9 @@ public class RSATools
 		}
 
 		Properties encPro = new Properties();
-		FileInputStream inStream = null;
+		InputStream inStream = null;
 		try {
-			inStream = new FileInputStream(encFile);
+			inStream = JFileUtils.loadFileStream(encFile);
 			encPro.load( inStream );
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
