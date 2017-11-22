@@ -143,5 +143,13 @@ public interface JAppContext
 	 */
 	public JAppContext setRetInfo( String retCode, String retMsg );
 	
-	
+	/**
+	 * 
+	 * Nov 22, 201711:11:00 AM
+	 * cloneContext
+	 * @param reqModel 如果没有可为null.
+	 * @param rspModel  如果没有可为null.
+	 * @return
+	 */
+	public JAppContext cloneContext( Object reqModel, Object rspModel );
 }

@@ -3,26 +3,15 @@ package jplat.core.trans.impl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jplat.base.app.parser.IAppPacketConvertor;
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.session.JSession;
 import jplat.core.session.JSessionFactory;
-import jplat.core.trans.JIUserInfo;
-import jplat.core.trans.JAppConnectInfo;
 import jplat.core.trans.JAppContext;
-import jplat.core.trans.JClientReqHeader;
 import jplat.error.exception.JSystemException;
-import jplat.error.exception.JTransException;
-import jplat.tools.coder.JsonCoder;
-import jplat.tools.config.JAppConfig;
-import jplat.tools.data.validate.JBeanValidateUtils;
-
-import com.google.gson.JsonElement;
 
 /**
  * 一次服务请求的上下文.
@@ -39,9 +28,6 @@ public class JServletAppContext extends JBaseAppContext
 	//其实对应从层来说，它连用的什么协议都不应该知道.
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
-	//数据解析器.
-	private IAppPacketConvertor appParser;
 	
 	@Override
 	public JSession createSession( boolean create ) throws JSystemException
@@ -71,6 +57,12 @@ public class JServletAppContext extends JBaseAppContext
 		return createSession(false);
 	}
 	
+	public JServletAppContext setSession(JSession sess)
+	{
+		this.session = sess;
+		return this;
+	}
+	
 	/**
 	 * 配置请求参数.
 	 * @author zhangcq
@@ -79,81 +71,14 @@ public class JServletAppContext extends JBaseAppContext
 	 * @param request
 	 * @param response
 	 */
-	public void config( HttpServletRequest request, HttpServletResponse response )
+	public JServletAppContext config( HttpServletRequest request, HttpServletResponse response )
 	{
 		this.request = request;
 		this.response = response;
-	}
-	
-	/******** getter-setters *******/
-	public String getRetCode() {
-		return retCode;
-	}
-
-	public JAppContext setRetCode(String retCode) {
-		this.retCode = retCode;
-		
-		return this;
-	}
-
-	public String getRetMsg() {
-		return retMsg;
-	}
-
-	public JAppContext setRetMsg(String retMsg) {
-		this.retMsg = retMsg;
 		
 		return this;
 	}
 	
-	public Object getReqBody() {
-		return reqBody;
-	}
-
-	public void setReqBody(Object reqBody) {
-		this.reqBody = reqBody;
-	}
-
-	public Object getRspBody() {
-		return rspBody;
-	}
-
-	public void setRspBody(Object rspBody) {
-		this.rspBody = rspBody;
-	}
-
-	public JClientReqHeader getReqHeader() {
-		return reqHeader;
-	}
-
-	public void setReqHeader(JClientReqHeader reqHeader) {
-		this.reqHeader = reqHeader;
-	}
-
-	public HttpServletRequest getRequest() {
-		return request;
-	}
-
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
-	public HttpServletResponse getResponse() {
-		return response;
-	}
-
-	public void setResponse(HttpServletResponse response) {
-		this.response = response;
-	}
-
-	public JAppConnectInfo getConnInfo() {
-		return connInfo;
-	}
-
-	public void setConnInfo(JAppConnectInfo connInfo) {
-		this.connInfo = connInfo;
-	}
-
 	@Override
 	public InputStream getInputStream() throws JSystemException {
 		// TODO Auto-generated method stub
@@ -179,9 +104,36 @@ public class JServletAppContext extends JBaseAppContext
 	}
 
 	@Override
-	public String getUserMark()
-	{
+	public JAppContext cloneContext(Object reqModel, Object rspModel) {
 		// TODO Auto-generated method stub
-		return null;
+		JServletAppContext cloneCtx = new JServletAppContext();
+		cloneCtx.config(request, response);
+		cloneCtx.setSession(session);
+		cloneCtx.setUserInfo(userInfo);
+		cloneCtx.setReqHeader(reqHeader);
+		cloneCtx.setConnInfo(getConnInfo());
+		
+		cloneCtx.setRspBody(rspModel);
+		cloneCtx.setReqBody(reqBody);
+		
+		return cloneCtx;
+	}
+	
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public JServletAppContext setRequest(HttpServletRequest request) {
+		this.request = request;
+		return this;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public JServletAppContext setResponse(HttpServletResponse response) {
+		this.response = response;
+		return this;
 	}
 }

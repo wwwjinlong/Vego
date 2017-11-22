@@ -124,6 +124,8 @@ public abstract class JBaseAppContext implements JAppContext
 		return session.isNew();
 	}
 	
+	/********** get-set mths **********/
+	
 	@Override
 	public String getRetCode() {
 		return retCode;
@@ -139,16 +141,18 @@ public abstract class JBaseAppContext implements JAppContext
 		return reqBody;
 	}
 
-	public void setReqBody(Object reqBody) {
+	public JBaseAppContext setReqBody(Object reqBody) {
 		this.reqBody = reqBody;
+		return this;
 	}
 
 	public Object getRspBody() {
 		return rspBody;
 	}
 
-	public void setRspBody(Object rspBody) {
+	public JBaseAppContext setRspBody(Object rspBody) {
 		this.rspBody = rspBody;
+		return this;
 	}
 
 	@Override
@@ -156,8 +160,9 @@ public abstract class JBaseAppContext implements JAppContext
 		return reqHeader;
 	}
 
-	public void setReqHeader(JClientReqHeader reqHeader) {
+	public JBaseAppContext setReqHeader(JClientReqHeader reqHeader) {
 		this.reqHeader = reqHeader;
+		return this;
 	}
 
 	@Override
@@ -167,6 +172,12 @@ public abstract class JBaseAppContext implements JAppContext
 
 	public void setConnInfo(JAppConnectInfo connInfo) {
 		this.connInfo = connInfo;
+	}
+	
+	public JBaseAppContext setUserInfo( JIUserInfo userInfo )
+	{
+		this.userInfo = userInfo;
+		return this;
 	}
 
 	@Override
@@ -209,5 +220,17 @@ public abstract class JBaseAppContext implements JAppContext
 		this.retMsg = retMsg;
 		
 		return this;
+	}
+	
+	@Override
+	public String getUserMark()
+	{
+		// TODO Auto-generated method stub
+		if ( userInfo != null )
+		{
+			return userInfo.obtUserMark();
+		}
+		
+		return "";
 	}
 }
