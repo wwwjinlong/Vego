@@ -1,4 +1,4 @@
-package jplat.tools.net;
+package jplat.tools.net.http;
 
 import java.io.IOException;
 import java.io.InputStream;

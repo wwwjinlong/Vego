@@ -1,4 +1,4 @@
-package jplat.tools.net;
+package jplat.tools.net.http;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

@@ -9,4 +9,4 @@
  * @date Dec 20, 2016
  * @comment 
  */
-package jplat.tools.net;
+package jplat.tools.net.http;
