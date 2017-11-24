@@ -23,9 +23,9 @@ public class EncryptTestUtils
 	{
 //		RSATools.getInstance();
 		
-		testAES();
+//		testAES();
 		
-//		testRSA();
+		testRSA();
 	}
 	
 	public static void testMap()
@@ -54,7 +54,7 @@ public class EncryptTestUtils
 	
 	public static void testRSA()
 	{
-		String reqMsg = "{\"head\":{},\"body\":{\"couponPwd\":\"今天星期1,RSA\"}}";
+		String reqMsg = getPlainBody("测试一下RSA");
 		
 		//生成aes密钥
 		String aesKey = JRandomUtil.getRandomSequence(16);
@@ -68,7 +68,7 @@ public class EncryptTestUtils
 		String cipher64 = showAESCipher(reqMsg,aesKey);
 		
 		//拼接密文.
-		XLog.log("----------RSACipher:[ %s#%s ]", aes64Key,cipher64);
+		XLog.log("----------RSACipher:[%s#%s]", aes64Key,cipher64);
 		
 		/****************** 解密 ********************/
 		//返回的base64密文.
@@ -80,7 +80,7 @@ public class EncryptTestUtils
 	
 	private static String showAESCipher( String plainText, String aesKey )
 	{
-		plainText = String.format("{\"head\":{},\"body\":{\"text\":\"%s\"}}", plainText);
+		plainText = getPlainBody(plainText);
 		try
 		{
 			String base64Data = Base64Coder.toBase64String(AESTools.encrypt(plainText.getBytes("utf-8"), aesKey));
@@ -97,6 +97,11 @@ public class EncryptTestUtils
 		}
 		
 		return "";
+	}
+	
+	private static String getPlainBody( String plainText )
+	{
+		return String.format("{\"head\":{},\"body\":{\"text\":\"%s\",\"note\":\"this is encrypt test.\"}}", plainText);
 	}
 	
 	private static void doAESDecrypt( String encdata, String keyStr )

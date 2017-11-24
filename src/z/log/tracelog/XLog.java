@@ -20,7 +20,7 @@ public class XLog
 	public static void loginit( String fmt, String...args )
 	{
 		String curr = Thread.currentThread().getName();
-		System.out.println( "["+curr+"]-__SYS_INIT__"+String.format(fmt, args));
+		System.out.println( "["+curr+"]-__SYS_INIT__:"+String.format(fmt, args));
 	}
 	
 	//客户级别初始化日志.

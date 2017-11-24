@@ -16,9 +16,9 @@ import org.apache.logging.log4j.Logger;
 
 import z.log.tracelog.XLog;
 
-public class JFileStreamUtils
+public class JServletStreamUtils
 {
-	private static Logger logger = LogManager.getLogger(JFileStreamUtils.class);
+	private static Logger logger = LogManager.getLogger(JServletStreamUtils.class);
 	
 	/**
 	 * 读取文件.
@@ -97,16 +97,5 @@ public class JFileStreamUtils
 
 		logger.info("__APP_FILE_SIZE="+bous.size());
 		return bous.toByteArray();
-	}
-	
-	public static void archiveFile( TarArchiveOutputStream taos, String filepath, byte[] filedata ) throws Exception {
-		int BUFFER = 4096;
-		TarArchiveEntry entry = new TarArchiveEntry(filepath);
-
-		entry.setSize(filedata.length);
-
-		taos.putArchiveEntry(entry);
-		taos.write(filedata);
-		taos.closeArchiveEntry();
 	}
 }

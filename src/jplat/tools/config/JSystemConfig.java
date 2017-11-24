@@ -1,14 +1,17 @@
 package jplat.tools.config;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-import z.log.tracelog.XLog;
 import jplat.error.exception.JSystemException;
 import jplat.tools.string.DateUtil;
 import jplat.tools.string.JRandomUtil;
+import jplat.tools.string.JStringUtil;
 import jplat.tools.string.StringUtil;
+import z.log.tracelog.XLog;
 
 /**
  * 父类基础类.该类不应该直接使用和修改.
@@ -20,10 +23,8 @@ import jplat.tools.string.StringUtil;
 public class JSystemConfig extends JBasePropertiesReader
 {
 	//环境切换配置文件.
-	private String envFile = "conf/system/AENV";
-	
-	//环境配置文件.
-//	private static String[] confs = {"conf/system/:ENV:/sys_base","conf/system/:ENV:/sys_env","conf/system/:ENV:/batch"};
+	private static String envFile = "classpath:conf/system/AENV";
+	private static String envHolder = ":ENV:";
 	
 	//本机IP地址.
 	private String localIpAddr = StringUtil.getLocalIP();
@@ -44,12 +45,14 @@ public class JSystemConfig extends JBasePropertiesReader
 	private void init() throws JSystemException
 	{
 		//环境类型
-		String envType = getEnvValue(envFile,"envType");
+		String envType = getEnvValue(envFile,"environment");
+		XLog.loginit("USE ENV_TYPE:"+envType);
 		
-		//配置文件列表.
-		String[] confs = getEnvValue(envFile,"proFiles").split(",");
+		//parser config paths.
+		String[] confPaths = getProFileArray(envFile,envType);
 		
-		loadConfigs(envType,true,confs);
+		//load config files.
+		loadConfigs(envType,true,confPaths);
 		
 		if("127001".equals(fixSample) )
 		{
@@ -58,6 +61,88 @@ public class JSystemConfig extends JBasePropertiesReader
 		}
 		
 		XLog.loginit("SENQUENCE_PREFIX:%s", fixSample);
+	}
+	
+	/**
+	 * 将三种类型的配置统一解析成文件路径.
+	 * Nov 23, 20176:06:59 PM
+	 * getProFileArray
+	 * @param envFile
+	 * @param envType
+	 * @return
+	 */
+	private String[] getProFileArray( String envFile, String envType )
+	{
+		List<String> proList = new ArrayList<String>();
+		
+		// conf/system/def/XXX.properties.
+		String[] confs = getEnvValue(envFile,"defProps").split(",");
+		for ( int i = 0; i < confs.length; ++i )
+		{
+			String confStr = confs[i];
+			if ( JStringUtil.isEmpty(confStr) )
+			{
+				continue;
+			}
+			
+			proList.add(String.format("classpath:conf/system/def/%s.properties",confStr));
+		}
+		
+		// conf/system/ENV/XXX_ENV.properties.
+		confs = getEnvValue(envFile,"envProps").split(",");
+		for ( int i = 0; i < confs.length; ++i )
+		{
+			String confStr = confs[i];
+			if ( JStringUtil.isEmpty(confStr) )
+			{
+				continue;
+			}
+			
+			proList.add(String.format("classpath:conf/system/%s/%s_%s.properties", envType,confStr,envType));
+		}
+		
+		// classpath path.
+		confs = getEnvValue(envFile,"clpProps").split(",");
+		for ( int i = 0; i < confs.length; ++i )
+		{
+			String confStr = confs[i];
+			if ( JStringUtil.isEmpty(confStr) )
+			{
+				continue;
+			}
+			
+			//env aware still.
+			if ( confStr.contains(":ENV:") )
+			{
+				confStr = confStr.replaceFirst(":ENV:", envType);
+				proList.add(String.format("classpath:%s_%s.properties", confStr,envType));
+				continue;
+			}
+			
+			proList.add(String.format("classpath:%s.properties", confStr));
+		}
+		
+		//absolute system path.
+		confs = getEnvValue(envFile,"sysProps").split(",");
+		for ( int i = 0; i < confs.length; ++i )
+		{
+			String confStr = confs[i];
+			if ( JStringUtil.isEmpty(confStr) )
+			{
+				continue;
+			}
+			
+			proList.add(confStr);
+		}
+		
+		int id = 0;
+		for ( Object s1 : proList )
+		{
+			XLog.log("NAME=[%s]", s1.getClass().getName());
+			XLog.log("__CONF_LIST[%d][%s]", ++id,s1 );
+		}
+		
+		return proList.toArray(new String[]{});
 	}
 	
 	/**

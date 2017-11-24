@@ -1,13 +1,8 @@
 package jplat.tools.config;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.locks.ReentrantLock;
 
-import z.log.tracelog.XLog;
 import jplat.error.exception.JSystemException;
-import jplat.tools.string.JRandomUtil;
-import jplat.tools.string.StringUtil;
+import z.log.tracelog.XLog;
 
 /**
  * 配置管理类.
@@ -70,6 +65,22 @@ public class JConfigManager
 	
 	public static void main(String args[])
 	{
+		loadTest();
+	}
+	
+	/********** test code *************/
+	private static void loadTest()
+	{
+		JSystemConfig config = JConfigManager.getInstance().getSystemConfig();
+		
+		XLog.log("default config[%s]", config.getString("mdp.health"));
+		XLog.log("sys_env config[%s]", config.getString("app.test"));
+		XLog.log("classpath config[%s]", config.getString("keyPassword"));
+		XLog.log("system absolute config[%s]", config.getString("cache.clear.runtime"));
+		
+	}
+	private static void reloadTest()
+	{
 		for ( int i = 0; i < 1000; ++i )
 		{
 			try {
@@ -82,6 +93,5 @@ public class JConfigManager
 			JConfigManager.getInstance().reload();
 			XLog.log("--------------------"+JConfigManager.getInstance().getSystemConfig().getString("app.name"));
 		}
-		
 	}
 }

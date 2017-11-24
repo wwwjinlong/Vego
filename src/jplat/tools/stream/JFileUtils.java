@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
+
 import z.log.tracelog.XLog;
 
 public class JFileUtils {
@@ -45,5 +48,16 @@ public class JFileUtils {
 		}
 
 		return new FileInputStream(new File(filepath));
+	}
+	
+	public static void archiveFile( TarArchiveOutputStream taos, String filepath, byte[] filedata ) throws Exception {
+		int BUFFER = 4096;
+		TarArchiveEntry entry = new TarArchiveEntry(filepath);
+
+		entry.setSize(filedata.length);
+
+		taos.putArchiveEntry(entry);
+		taos.write(filedata);
+		taos.closeArchiveEntry();
 	}
 }

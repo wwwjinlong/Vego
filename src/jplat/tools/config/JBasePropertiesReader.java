@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import jplat.base.constant.KPlatResponseCode;
 import jplat.error.exception.JSystemException;
+import jplat.tools.string.JStringUtil;
 import jplat.tools.string.StringUtil;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,14 +28,6 @@ import z.log.tracelog.XLog;
 public class JBasePropertiesReader
 {
 	private Map<String,String> cMap = new ConcurrentHashMap<String,String>();
-
-	/**
-	 * @param envType	环境类型.
-	 * @param proName	配置列表.
-	 */
-	public JBasePropertiesReader()
-	{
-	}
 	
 	//初始化.
 	protected void loadConfigs( String envType,boolean print, String ...proName  ) throws JSystemException
@@ -48,16 +41,10 @@ public class JBasePropertiesReader
 		for ( String confpath : proName )
 		{
 			confpath = confpath.trim();
-			if( confpath.contains(":ENV:") )
-			{
-				confpath = confpath.replaceFirst(":ENV:", envType);
-			}
+			
 
-			//match the environment.
-			String rc = StringUtil.isEmpty(envType)?confpath:confpath+"_"+envType;
-
-			Properties props = JConfigUtils.loadPropertis(rc);
-			XLog.loginit("load property config success["+rc+"]");
+			Properties props = JConfigUtils.loadPropertis(confpath);
+			XLog.loginit("__LOAD PROPERTY SUCCESS["+confpath+"]");
 
 			Iterator<Entry<Object, Object>> it = props.entrySet().iterator();  
 			while (it.hasNext())
@@ -161,10 +148,14 @@ public class JBasePropertiesReader
 		try
 		{
 			Properties props = JConfigUtils.loadPropertis(envFile);
-			String envType = props.getProperty(key);
+			String envValue = props.getProperty(key);
 					
-			XLog.loginit("using enviroment type:"+envType);
-			return envType;
+			if ( JStringUtil.isEmpty(envValue) )
+			{
+				return "";
+			}
+			
+			return envValue;
 		}
 		catch (MissingResourceException e)
 		{
