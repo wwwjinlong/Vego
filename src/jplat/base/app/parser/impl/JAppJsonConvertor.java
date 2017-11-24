@@ -101,7 +101,7 @@ public class JAppJsonConvertor implements IAppPacketConvertor
 			//可能是密文.
 			json = new String( guarder.dencryptData(context, dataConnector.readInputBytes(context)), JAppConfig.PACK_CHARSET );
 			
-			logger.info("__FROM_APP1:"+json);
+			logger.info(new StringBuilder("__FROM_APP1:[").append(json).append("]").toString());
 		}
 		catch (UnsupportedEncodingException e)
 		{

@@ -19,9 +19,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 
-import javax.crypto.Cipher;
-
-import org.apache.commons.lang3.ArrayUtils;
+import jplat.tools.stream.JFileUtils;
 
 public class RSAUtils
 {
@@ -99,7 +97,7 @@ public class RSAUtils
 		{
 			KeyStore keyStore = KeyStore.getInstance("JKS");
 
-			FileInputStream fin = new FileInputStream(jskFile);
+			InputStream fin =  JFileUtils.loadFileStream(jskFile);
 			keyStore.load(fin, storePass.toCharArray());
 			fin.close();
 			Certificate cert = keyStore.getCertificate(keyAlias);
@@ -169,7 +167,7 @@ public class RSAUtils
 		char[] keyp = keypwd.toCharArray(); // 证书密码
 		RSAPrivateKey pk2 = null;
 		
-		FileInputStream fis2 = new FileInputStream(jksfile);
+		InputStream fis2 = JFileUtils.loadFileStream(jksfile);
 		KeyStore ks = KeyStore.getInstance("JKS"); // 加载证书库
 		ks.load(fis2, storep );
 		pk2 = (RSAPrivateKey) ks.getKey(keyalias, keyp ); // 获取证书私钥
