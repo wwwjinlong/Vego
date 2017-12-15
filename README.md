@@ -12,5 +12,5 @@
     将工程导出为jar包到VService工程中即可。VService工程中负责实现业务逻辑的实现，实现的的方法类似public void ping( JAppContext appCtx, HealthReqModel reqModel, HealthRspModel rspModel );彻底和servlet,SpringMVC等具体实现脱离。
    
 # 待完善的功能
-    - 配置注解化
-    - url映射缓存的优化，目前无淘汰机制。
+- 配置注解化
+- url映射缓存的优化，目前无淘汰机制。
