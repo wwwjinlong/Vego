@@ -34,7 +34,8 @@ public class JAppLogUtils {
 		//设置错误头.
 		String errCode = StringUtil.getDefString(sysException.getErrCode(),JAppConnectInfo.V_HRETCODE_FAIL);
 		response.setHeader( JAppConnectInfo.H_RET_HEAD, errCode );
-//		response.setContentType("application/json;charset:utf-8");
+		response.setContentType("application/json;charse=utf-8");
+		
 		return JsonCoder.toJsonString(errMap);
 	}
 	
