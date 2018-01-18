@@ -19,5 +19,5 @@
 参见: http://111.230.155.193:8080/VService/api/all.do
 
 # 文档
-- 开发手册: http://note.youdao.com/noteshare?id=723d9550b6e85794e1e38b8e7b2daa28&sub=F43AC72124364D8DBB5AAA78AB95D91A
-- 语法配置: http://note.youdao.com/noteshare?id=744e2455f90c2901e8fb1ba91dbcb3fe&sub=C7622A99BC7C4860950CBBE15DC2B354
+- 开发手册: https://github.com/HiRobot/Vego/blob/master/DEV_DOC.md
+- 语法配置: https://github.com/HiRobot/Vego/blob/master/CONF_DOC.md

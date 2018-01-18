@@ -195,6 +195,4 @@ order by create_date desc,create_time desc` 找到登录信息，`jsession`即�
 
 ### 七、开发工具使用
 1. 手动进入灰度环境，打开开关即可。
-2. 网页版进入灰度环境，首先访问：https://pbank.bankofchangsha.com/directBank/public/test/grayload.do?userid=1862159XXXX ，然后访问后续网页即可。
-3. 在测试开发打开后，/test/session/fakeload.do。
 4. 调用/mgr/config/reload.do后可以动态刷新参数。
