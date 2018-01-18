@@ -39,13 +39,14 @@ public abstract class JAppBaseService
 	
 	@ExceptionHandler(JSystemException.class)
 	@ResponseBody
-	public String execJTransExceptionHandler( JSystemException sysException, HttpServletResponse response )
+	public String execJSystemExceptionHandler( JSystemException sysException, HttpServletResponse response )
 	{
 		logger.error(JTraceLogUtils.getExceptionFullLog(sysException, JAppConfig.LOG_TRACE_CNT, true));
 		if ( sysException.sysEx != null )
 		{
 			logger.error(JTraceLogUtils.getExceptionFullLog(sysException.sysEx, JAppConfig.LOG_TRACE_CNT, true));
 		}
+		
 		return JAppLogUtils.buildErrMessage(sysException,response);  
 	}
 

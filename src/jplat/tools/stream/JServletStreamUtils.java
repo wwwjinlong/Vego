@@ -24,26 +24,14 @@ public class JServletStreamUtils
 	 * 读取文件.
 	 * @author zhangcq
 	 * @date Dec 26, 2016
-	 * @comment 
+	 * @comment chunked supported by underlying implementation.
 	 * @param request
 	 * @return
 	 * @throws JSystemException 
 	 */
 	public static byte[] readInputStream( HttpServletRequest request ) throws JSystemException
 	{
-		int cl = request.getContentLength();		
-
-		if ( cl == 0 )
-		{
-			return "".getBytes();
-		}
-
-		//chunked?
-		if ( cl < 0 )
-		{
-			logger.error(XLog.CONN_MARK+"content-length not found,无法获取报文长度,transfer-coding="+request.getHeader("transfer-coding"));
-			throw new JSystemException(KPlatResponseCode.CD_APPCONN_ERROR,KPlatResponseCode.MSG_APPCONN_ERROR+"t=c");
-		}
+		int cl = request.getContentLength();
 
 		ByteArrayOutputStream bous = new ByteArrayOutputStream();
 		byte[] indata = new byte[3072];	//3k;
@@ -58,7 +46,7 @@ public class JServletStreamUtils
 				//				logger.info("SAVAILABLE:"+ins.available());
 				int len = ins.read(indata);
 				//EOF
-				if ( len == -1 || totalLen == cl )
+				if ( len == -1 )
 				{
 					logger.info(String.format(XLog.CONN_MARK+"__FINAL_READ:fl_len=%d,tl_len=%d,cl_len=%d",len,totalLen,cl));
 					break;
@@ -71,13 +59,10 @@ public class JServletStreamUtils
 			}
 
 			ins.close();
-			if (cl != bous.size())
-			{
-				logger.error(XLog.CONN_MARK+"__READ_ERROR,contentLength=" + cl+",readlen="+ bous.size());
-				return "".getBytes();
-			}
-
 			bous.close();
+
+			logger.info("__APP_DATA_SIZE="+bous.size());
+			return bous.toByteArray();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,8 +79,7 @@ public class JServletStreamUtils
 				}
 			}
 		}
-
-		logger.info("__APP_FILE_SIZE="+bous.size());
-		return bous.toByteArray();
+		
+		return "".getBytes();
 	}
 }

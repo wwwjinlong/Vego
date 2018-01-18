@@ -119,12 +119,31 @@ public class JHttpUtils
 	 */
 	public static byte[] postHttpData( String url, String dataStr, String charset ) throws IOException
 	{
-		return postHttpData(url,dataStr.getBytes(charset));
+		return postHttpData(url,dataStr.getBytes(charset),null,null);
 	}
 	
-	private static byte[] postHttpData( String url, byte[] byteData ) throws IOException
+	private static byte[] postHttpData( String url, byte[] byteData, Map<String,String> header, Map<String,String> cookieMap ) throws IOException
 	{
 		HttpPost httpPost = new HttpPost(url);
+		
+		if( header != null )
+		{
+			for ( String headKey : header.keySet() )
+			{
+				httpPost.setHeader(headKey,header.get("headKey"));
+			}
+		}
+		
+		if ( cookieMap != null )
+		{
+			StringBuilder sbuffer = new StringBuilder();
+			for ( String cookieKey : cookieMap.keySet() )
+			{
+				sbuffer.append(cookieKey).append("=").append(cookieMap.get(cookieKey)).append(";");
+			}
+			
+			httpPost.setHeader("Cookie",sbuffer.toString());
+		}
 		
 		ByteArrayEntity byteEntity = new ByteArrayEntity(byteData);
 		httpPost.setEntity(byteEntity);

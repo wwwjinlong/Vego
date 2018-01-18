@@ -4,7 +4,7 @@
 	<properties>
 		<!-- <property name="LOG_HOME">E:\ebanksvn2\source\dbank\trunk\logs\dbank</property> -->
 		<property name="LOG_HOME">${sys:user.home}/__logs/dbank</property>
-		<property name="LOG_NAME">dbank</property>
+		<property name="LOG_NAME">vego</property>
 		<property name="LOG_PATTERN">[%.4p|${ctx:quickTrace}|%.10t|%d{HH:mm:ss.SSS} %c{1}:%L|%m]%n</property>
 	</properties>
 

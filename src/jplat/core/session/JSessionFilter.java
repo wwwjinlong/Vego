@@ -14,17 +14,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
+
 import jplat.core.trans.JAppConnectInfo;
 import jplat.error.exception.JTransException;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.string.StringUtil;
 import jplat.tools.trace.JAppLogUtils;
 import jplat.tools.trace.JTimeCounter;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.ThreadContext;
-
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
 
@@ -98,7 +97,7 @@ public class JSessionFilter implements Filter
 		{
 			filterChain.doFilter(request, response);
 		}
-		catch( Exception e )
+		catch( Throwable e )
 		{
 			exmark = "EX";
 			logger.error("FATAL_ERR::"+JTraceLogUtils.getExceptionFullLog(e, JAppConfig.LOG_TRACE_CNT, true));

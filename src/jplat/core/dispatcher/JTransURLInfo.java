@@ -98,6 +98,7 @@ public class JTransURLInfo
 	
 	public JTransInfo getActionInfo( ApplicationContext springCtx ) throws JSystemException
 	{
+		//TODO 确定是否是单例需要.
 		Object clz = springCtx.getBean(findClazz());
 		
 		Method mtd = findMethod();
