@@ -3,12 +3,12 @@ package jplat.tools.string;
 import jplat.base.constant.KPlatResponseCode;
 import jplat.error.exception.JTransException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class JStringUtil extends StringUtil
 {
-	private static Logger logger = LogManager.getLogger(JStringUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(JStringUtil.class);
 	
 	public static String concat( String args[], String join )
 	{

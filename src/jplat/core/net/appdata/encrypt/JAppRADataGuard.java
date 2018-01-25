@@ -13,8 +13,8 @@ import jplat.tools.encrypt.AESTools;
 import jplat.tools.encrypt.RSATools;
 import jplat.tools.string.StringUtil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * 基本加密器.
@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class JAppRADataGuard implements IDataGuard
 {
-	private Logger logger = LogManager.getLogger(JAppRADataGuard.class);
+	private Logger logger = LoggerFactory.getLogger(JAppRADataGuard.class);
 	
 	/****
 	 * appCtx 应用上下文.

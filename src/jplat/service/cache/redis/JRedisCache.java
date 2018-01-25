@@ -8,8 +8,8 @@ import jplat.service.cache.JICrossCache;
 import jplat.tools.string.DateUtil;
 import jplat.tools.string.JRandomUtil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
@@ -21,7 +21,7 @@ import z.log.tracelog.KTraceLog;
  */
 public class JRedisCache implements JICrossCache
 {
-	private static Logger logger = LogManager.getLogger(JRedisSession.class);
+	private static Logger logger = LoggerFactory.getLogger(JRedisSession.class);
 	
 	private static long REDIS_SETOK_0 = 0;
 	private static long REDIS_SETOK_1 = 1;

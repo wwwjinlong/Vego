@@ -19,8 +19,8 @@ import jplat.tools.file.XFileTools;
 import jplat.tools.string.JRandomUtil;
 import jplat.tools.string.StringUtil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class FakeSessionCtrl
 {
-	private Logger logger = LogManager.getLogger(FakeSessionCtrl.class);
+	private Logger logger = LoggerFactory.getLogger(FakeSessionCtrl.class);
 	
 	/**
 	 * 便于测试 构造会话.

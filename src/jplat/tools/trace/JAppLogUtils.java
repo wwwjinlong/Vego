@@ -15,12 +15,12 @@ import jplat.error.exception.JBaseException;
 import jplat.tools.coder.JsonCoder;
 import jplat.tools.string.StringUtil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class JAppLogUtils {
 	
-	private static Logger logger = LogManager.getLogger(JAppLogUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(JAppLogUtils.class);
 	
 	public static String buildErrMessage( JBaseException sysException,HttpServletResponse response )
 	{

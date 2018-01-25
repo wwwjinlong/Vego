@@ -9,8 +9,8 @@ import jplat.error.exception.JTransException;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.trace.JAppLogUtils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,7 +18,7 @@ import z.log.tracelog.JTraceLogUtils;
 
 public abstract class JAppBaseService
 {
-	private Logger logger = LogManager.getLogger(JAppBaseService.class);
+	private Logger logger = LoggerFactory.getLogger(JAppBaseService.class);
 	
 	//数据安全检查
 //	protected IDataChecker dataChecker = new JDataChecker();

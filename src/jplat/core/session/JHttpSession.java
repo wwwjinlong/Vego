@@ -9,8 +9,8 @@ import jplat.core.trans.JIUserInfo;
 import jplat.error.exception.JSystemException;
 import jplat.tools.config.JConfigManager;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
@@ -24,7 +24,7 @@ import z.log.tracelog.XLog;
  */
 public class JHttpSession implements JSession
 {
-	private static Logger logger = LogManager.getLogger(JHttpSession.class);
+	private static Logger logger = LoggerFactory.getLogger(JHttpSession.class);
 	
 	private static Class usrInfoClass = getUserClass();
 	

@@ -11,14 +11,14 @@ import jplat.error.exception.JSystemException;
 
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import z.log.tracelog.XLog;
 
 public class JServletStreamUtils
 {
-	private static Logger logger = LogManager.getLogger(JServletStreamUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(JServletStreamUtils.class);
 	
 	/**
 	 * 读取文件.

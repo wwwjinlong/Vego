@@ -14,8 +14,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 
 import jplat.core.trans.JAppConnectInfo;
@@ -29,7 +29,7 @@ import z.log.tracelog.KTraceLog;
 
 public class JSessionFilter implements Filter
 {
-	private Logger logger = LogManager.getLogger(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private static String QT_FLAG = "quickTrace";
 	
@@ -100,7 +100,7 @@ public class JSessionFilter implements Filter
 		catch( Throwable e )
 		{
 			exmark = "EX";
-			logger.error("FATAL_ERR::"+JTraceLogUtils.getExceptionFullLog(e, JAppConfig.LOG_TRACE_CNT, true));
+			logger.error("FATAL_ERR:{}",JTraceLogUtils.getExceptionFullLog(e, JAppConfig.LOG_TRACE_CNT, true));
 			
 			writeResponse((HttpServletResponse) response);
 			return;

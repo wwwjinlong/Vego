@@ -7,14 +7,14 @@ import java.util.concurrent.TimeUnit;
 import jplat.tools.config.JConfigManager;
 import jplat.tools.config.JSystemConfig;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import z.log.tracelog.XLog;
 
 public class JTaskExecutor
 {
-	private Logger logger = LogManager.getLogger(JTaskExecutor.class);
+	private Logger logger = LoggerFactory.getLogger(JTaskExecutor.class);
 	
 	private ThreadPoolExecutor fixedThreadPool;
 	

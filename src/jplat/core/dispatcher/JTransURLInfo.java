@@ -2,6 +2,8 @@ package jplat.core.dispatcher;
 
 import java.lang.reflect.Method;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 import jplat.base.constant.KPlatResponseCode;
@@ -15,6 +17,8 @@ public class JTransURLInfo
 	private String moduleCode;
 	private String clazzName;
 	private String methodName;
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public JTransURLInfo( String moduleCode_, String clazzName_, String methodName_ )
 	{
@@ -98,11 +102,11 @@ public class JTransURLInfo
 	
 	public JTransInfo getActionInfo( ApplicationContext springCtx ) throws JSystemException
 	{
-		//TODO 确定是否是单例需要.
-		Object clz = springCtx.getBean(findClazz());
+		//TODO 这里是单例的话会节省内存使用,确定是否是单例.
+		Object targetOjb = springCtx.getBean(findClazz());
 		
-		Method mtd = findMethod();
-		JTransInfo clzInfo = new JTransInfo(clz,mtd);
+		Method targetMtd = findMethod();
+		JTransInfo clzInfo = new JTransInfo(targetOjb,targetMtd);
 		clzInfo.initParaClass();
 
 		return clzInfo;

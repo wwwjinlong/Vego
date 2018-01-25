@@ -13,8 +13,8 @@ import jplat.tools.string.DateUtil;
 import jplat.tools.string.JRandomUtil;
 import jplat.tools.string.StringUtil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
@@ -28,7 +28,7 @@ import z.log.tracelog.XLog;
  */
 public class JRedisSession implements JSession
 {
-	private static Logger logger = LogManager.getLogger(JRedisSession.class);
+	private static Logger logger = LoggerFactory.getLogger(JRedisSession.class);
 	
 	private static Class usrInfoClass = getUserClass();
 	

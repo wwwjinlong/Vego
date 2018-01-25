@@ -7,15 +7,15 @@ import jplat.service.ctl.test.model.HealthRspModel;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.string.JStringUtil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 //@Controller
 public class HealthCheckerTrans
 {
-	private Logger logger = LogManager.getLogger(HealthCheckerTrans.class);
+	private Logger logger = LoggerFactory.getLogger(HealthCheckerTrans.class);
 	
 	public void ping( JAppContext appCtx, HealthReqModel reqModel, HealthRspModel rspModel )
 	{

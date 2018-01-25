@@ -1,13 +1,18 @@
 package jplat.base.app.parser.impl;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import jplat.base.app.parser.IAppPacketConvertor;
 import jplat.base.constant.KDolphinq;
@@ -26,15 +31,7 @@ import jplat.error.exception.JSystemException;
 import jplat.tools.coder.JsonCoder;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.string.StringUtil;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import z.log.tracelog.XLog;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 /**
  * 该类负责和App的解包和组包，以及加解密.
@@ -45,7 +42,7 @@ import com.google.gson.JsonParser;
  */
 public class JAppJsonConvertor implements IAppPacketConvertor
 {
-	private Logger logger = LogManager.getLogger(JAppJsonConvertor.class);
+	private Logger logger = LoggerFactory.getLogger(JAppJsonConvertor.class);
 	
 	//请求读取器
 	private IAppDataConnector dataConnector = new JHttpServletConnector();
@@ -142,7 +139,7 @@ public class JAppJsonConvertor implements IAppPacketConvertor
 		JsonElement reqBody = jo.get(KDolphinq.H_RSP_BODY);
 		if ( reqHeader == null )
 		{
-			logger.error(XLog.CONN_MARK+"无法获取从输入数据获得head");
+			logger.error("{}无法获取从输入数据获得head",XLog.CONN_MARK);
 			throw new JSystemException(KPlatResponseCode.CD_INPUT_ERROR,KPlatResponseCode.MSG_INPUT_ERROR+",t=hd");
 		}
 

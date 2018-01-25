@@ -2,6 +2,9 @@ package jplat.core.net.appdata.check;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.net.appdata.IDataChecker;
 import jplat.core.session.redis.JRedisConnector;
@@ -11,10 +14,6 @@ import jplat.tools.config.JAppConfig;
 import jplat.tools.string.JDateUtil;
 import jplat.tools.string.JRandomUtil;
 import jplat.tools.string.StringUtil;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
 
@@ -26,7 +25,7 @@ import z.log.tracelog.KTraceLog;
  */
 public class JDataChecker implements IDataChecker
 {
-	private Logger logger = LogManager.getLogger(JDataChecker.class);
+	private Logger logger = LoggerFactory.getLogger(JDataChecker.class);
 	
 	private static String keyPrefix = "sys:dfD_";
 	

@@ -20,8 +20,8 @@ import jplat.tools.stream.JServletStreamUtils;
 import jplat.tools.string.DateUtil;
 import jplat.tools.string.StringUtil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HealthChecker
 {
-	private Logger logger = LogManager.getLogger(HealthChecker.class);
+	private Logger logger = LoggerFactory.getLogger(HealthChecker.class);
 
 	@RequestMapping("/test/ping.do")
 	@ResponseBody
@@ -176,11 +176,13 @@ public class HealthChecker
 		byte[] outData = jsonStr.getBytes();
 		try {
 			response.setHeader("return-length", ""+outData.length);
+			response.setContentType("application/json;charse=utf-8");
 			OutputStream ous = response.getOutputStream();
-			ous.write(outData,0,10);
+			ous.write(outData);
+/*			ous.write(outData,0,10);
 			ous.flush();
 			ous.write(outData,10,outData.length-10);
-			ous.flush();
+			ous.flush();*/
 			ous.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

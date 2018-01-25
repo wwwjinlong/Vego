@@ -10,8 +10,8 @@ import java.util.Enumeration;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import jplat.core.session.JSessionUtils;
 import jplat.tools.string.DateUtil;
@@ -20,7 +20,7 @@ import jplat.tools.string.StringUtil;
 
 public class JTraceLogUtils
 {
-	private static Logger logger = LogManager.getLogger(JTraceLogUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(JTraceLogUtils.class);
 	
 	/**
 	 * 日志起始标记.

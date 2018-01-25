@@ -17,8 +17,8 @@ import jplat.tools.string.JStringUtil;
 import jplat.tools.string.StringUtil;
 import jplat.tools.trace.JAppLogUtils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import z.log.tracelog.XLog;
 
@@ -35,7 +35,7 @@ public class JAppContextFactory
 	//解析app传送过来的数据.
 	private IAppPacketConvertor appParser = new JAppJsonConvertor();
 	
-	private Logger logger = LogManager.getLogger(JAppContextFactory.class);
+	private Logger logger = LoggerFactory.getLogger(JAppContextFactory.class);
 
 	/***
 	 * 建立请求应用上下文.

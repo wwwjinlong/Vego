@@ -9,8 +9,8 @@ import javax.xml.rpc.ServiceException;
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.encoding.XMLType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * webservice客户端.
@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class JWebServieClient
 {
-	private static Logger logger = LogManager.getLogger(JWebServieClient.class);
+	private static Logger logger = LoggerFactory.getLogger(JWebServieClient.class);
 	
 	/**
 	 * 发送请求xml.

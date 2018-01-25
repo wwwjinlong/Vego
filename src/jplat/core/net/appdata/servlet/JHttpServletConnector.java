@@ -14,16 +14,22 @@ import jplat.core.net.appdata.IAppDataConnector;
 import jplat.core.trans.JAppContext;
 import jplat.core.trans.impl.JServletAppContext;
 import jplat.error.exception.JSystemException;
+import jplat.tools.config.JAppConfig;
 import jplat.tools.config.JLogConfig;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
+import z.log.tracelog.JTraceLogUtils;
+import z.log.tracelog.KTraceLog;
 import z.log.tracelog.XLog;
 
 public class JHttpServletConnector implements IAppDataConnector
 {
-	private static Logger logger = LogManager.getLogger(JHttpServletConnector.class);
+	private static Logger logger = LoggerFactory.getLogger(JHttpServletConnector.class);
+	
+	//default 5M max.
+	private static int MAX_PACKET_LENGTH = JAppConfig.getInt("max_packet_len",5242880);
 	
 	public String readInputString( JAppContext context,String charset ) throws JSystemException 
 	{
@@ -45,7 +51,7 @@ public class JHttpServletConnector implements IAppDataConnector
 	}
 	
 	/**
-	 * 从servlet中读取数据，不支持chunkedStream模式.
+	 * 从servlet中读取数据，容器底层已支持chunkedStream模式.
 	 * @author zhangcq
 	 * @date Dec 7, 2016
 	 * @comment 
@@ -62,37 +68,30 @@ public class JHttpServletConnector implements IAppDataConnector
 			return "".getBytes();
 		}*/
 
-		int cl = request.getContentLength();		
-		if ( cl == 0 || "GET".equalsIgnoreCase(request.getMethod()) )
+		int cl = request.getContentLength();	
+		if ( "GET".equalsIgnoreCase(request.getMethod()) )
 		{
 			return "".getBytes();
 		}
 		
-		//chunked?
-		if ( cl < 0 )
-		{
-			logger.error(XLog.CONN_MARK+"content-length not found,无法获取报文长度,transfer-coding="+request.getHeader("transfer-coding"));
-			throw new JSystemException(KPlatResponseCode.CD_APPCONN_ERROR,KPlatResponseCode.MSG_APPCONN_ERROR+"t=c");
-		}
-
 		try
 		{
 			ByteArrayOutputStream bous = new ByteArrayOutputStream();
 			byte[] indata = new byte[3072];	//3k;
 			
-			BufferedInputStream ins = new BufferedInputStream(request.getInputStream());
 			int totalLen = 0;
+			BufferedInputStream ins = new BufferedInputStream(request.getInputStream());
 			while (true)
 			{
 				// 暂未做超时处理.
-				if ( JLogConfig.canPrintNetRead())
+/*				if ( JLogConfig.canPrintNetRead())
 				{
 					logger.info("SAVAILABLE:"+ins.available());
-				}
+				}*/
 				
 				int len = ins.read(indata);
 				//EOF
-				if ( len == -1 || totalLen == cl )
+				if ( len == -1 )
 				{
 					logger.info(String.format(XLog.CONN_MARK+"__FINAL_READ:fl_len=%d,tl_len=%d,cl_len=%d",len,totalLen,cl));
 					break;
@@ -104,17 +103,19 @@ public class JHttpServletConnector implements IAppDataConnector
 				}
 
 				totalLen += len;
+				if ( totalLen > MAX_PACKET_LENGTH )
+				{
+					logger.error(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_DATACHECK, KTraceLog.EVENT_POINT,
+							"", JTraceLogUtils.buildUserData("HTTP_READ","DATA_OVERFLOW_ERR","total="+totalLen,"max="+MAX_PACKET_LENGTH)));
+					throw new JSystemException(KPlatResponseCode.CD_APPCONN_ERROR,KPlatResponseCode.MSG_APPCONN_ERROR+"(09)");
+				}
+				
 				bous.write(indata, 0, len);
 			}
 
 			ins.close();
-			if (cl != bous.size())
-			{
-				logger.error(XLog.CONN_MARK+"__READ_ERROR,contentLength=" + cl+",readlen="+ bous.size());
-				return "".getBytes();
-			}
-
 			bous.close();
+			
 			return bous.toByteArray();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

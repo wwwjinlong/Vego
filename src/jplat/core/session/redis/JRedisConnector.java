@@ -13,8 +13,8 @@ import jplat.tools.config.JSystemConfig;
 import jplat.tools.string.JRandomUtil;
 import jplat.tools.string.JStringUtil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -34,7 +34,7 @@ public class JRedisConnector
 	
 	public static final String REDIS_RET_OK = "OK";
 
-	private static Logger logger = LogManager.getLogger(JRedisConnector.class);
+	private static Logger logger = LoggerFactory.getLogger(JRedisConnector.class);
 	
 	public String password;
 	
