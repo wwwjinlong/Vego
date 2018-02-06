@@ -23,6 +23,8 @@ public class JTransURLInfo
 	public JTransURLInfo( String moduleCode_, String clazzName_, String methodName_ )
 	{
 		moduleCode = moduleCode_;
+		
+		//rename the class prevent to load any class.
 		clazzName = JStringUtil.bigFirstCase(clazzName_);
 		methodName = methodName_;
 	}

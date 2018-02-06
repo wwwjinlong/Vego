@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>${beanName}</title>
-	<script type="text/javascript" src="${hostUrl}/codeview/scripts/shCore.js"></script>
-	<script type="text/javascript" src="${hostUrl}/codeview/scripts/shBrushJava.js"></script>
-	<link type="text/css" rel="stylesheet" href="${hostUrl}/codeview/styles/shCoreDefault.css"/>
+	<title>${returnResult.retData.beanName}</title>
+	<script type="text/javascript" src="${contextName}/resources/japi/static/codeview/scripts/shCore.js"></script>
+	<script type="text/javascript" src="${contextName}/resources/japi/static/codeview/scripts/shBrushJava.js"></script>
+	<link type="text/css" rel="stylesheet" href="${contextName}/resources/japi/static/codeview/styles/shCoreDefault.css"/>
 	<script type="text/javascript">SyntaxHighlighter.all();</script>
 </head>
 
 <body style="background: white; font-family: Helvetica">
 
-<h3>${beanName}.java</h3>
+<h3>${returnResult.retData.beanName}.java</h3>
 <pre class="brush: java;">
-${beanEntity}
+${returnResult.retData.beanEntity}
 </pre>
 </html>

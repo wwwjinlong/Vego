@@ -66,7 +66,7 @@ public class JTransDispatcherCtrl extends JAppBaseService
 			String moduleCode, String clazzName, String methodName ) throws JSystemException
 	{
 		//获取springMVC的上下文.
-//		ApplicationContext springMVCCtx  = AppServletContextHolder.getContext();
+//		ApplicationContext springMVCCtx = AppServletContextHolder.getContext();
 		
 		//获取spring的上下文.
 		ApplicationContext springCtx = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());

@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<%-- <link rel="stylesheet" type="text/css" href="${hostUrl}/resources/codelook.css" /> --%>
-<link rel="stylesheet" type="text/css" href="${hostUrl}/resources/codelook.css" />
+<link rel="stylesheet" type="text/css" href="${contextName}/resources/japi/static/mycss/codelook.css" />
 <head>
 <meta charset="utf-8">
 <title>模块列表</title>
@@ -23,14 +22,14 @@
 				<th>开发者</th>
 				<th>发布日期</th>
 			</tr>
-			<c:if test="${mdlList != null }">
-				<c:forEach var="apiItem" items="${mdlList}" varStatus="status">
+			<c:if test="${returnResult.retData != null }">
+				<c:forEach var="apiItem" items="${returnResult.retData}" varStatus="status">
 				<c:if test="${apiItem != null }">
 					<tr>
 						<td><%=++pseqno %></td>
 						<td>${apiItem.mdlDesc}</td>
 						<td>${apiItem.mdlCode}</td>
-						<td><a href="${hostUrl}/api/${apiItem.mdlCode}/list.do">port-list</a></td>
+						<td><a href="${contextName}/api/module/list.do?moduleCode=${apiItem.mdlCode}">port-list</a></td>
 						<td>${apiItem.developer}</td>
 						<td>${apiItem.relDate}</td>
 					</tr>

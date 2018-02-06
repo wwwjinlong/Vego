@@ -90,7 +90,8 @@ public class StringUtil
 			firstCh = (char)((int)firstCh - 32);
 		}
 
-		return ""+firstCh+fdName.substring(1);
+		return new StringBuilder().append(firstCh).append(fdName.substring(1)).toString();
+//		return ""+firstCh+fdName.substring(1);
 	}
 	
 	/**
