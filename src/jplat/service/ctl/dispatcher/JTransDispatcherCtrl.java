@@ -44,7 +44,7 @@ public class JTransDispatcherCtrl extends JAppBaseService
 	 * @param methodName 方法名.
 	 * @throws JSystemException 
 	 */
-	@RequestMapping("/json/{moduleCode}/{clazzName}/{methodName}.do")
+	@RequestMapping("/json2/{moduleCode}/{clazzName}/{methodName}.do")
 	public void doDispatchJson( HttpServletRequest request,HttpServletResponse response,
 			@PathVariable String moduleCode, @PathVariable String clazzName, @PathVariable String methodName ) throws JSystemException
 	{
