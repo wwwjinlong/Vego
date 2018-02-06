@@ -34,6 +34,8 @@ import z.log.tracelog.XLog;
 //@RequestMapping("/test157")
 public class JTransDispatcherCtrl extends JAppBaseService
 {
+	private JTransCache transCache = JTransCache.getInstance();
+	
 	/**
 	 * Oct 30, 201710:58:57 AM
 	 * doDispatchJson
@@ -75,7 +77,7 @@ public class JTransDispatcherCtrl extends JAppBaseService
 		JTransURLInfo urlInfo = new JTransURLInfo(moduleCode,clazzName,methodName);
 
 		//映射到具体类.
-		JTransInfo actionInfo = JTransCache.getInstance().getTransInfo(springCtx,urlInfo);
+		JTransInfo actionInfo = transCache.getTransInfo(springCtx,urlInfo);
 
 		//创建应用上下文.
 		JServletAppContext appCtx = (JServletAppContext)serviceFactory.buildAppContext(request, response, true);

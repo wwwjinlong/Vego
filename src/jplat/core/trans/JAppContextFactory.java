@@ -33,7 +33,7 @@ import z.log.tracelog.XLog;
 public class JAppContextFactory
 {
 	//解析app传送过来的数据.
-	private IAppPacketConvertor appParser = new JAppJsonConvertor();
+	private IAppPacketConvertor appParser;
 	
 	private Logger logger = LoggerFactory.getLogger(JAppContextFactory.class);
 

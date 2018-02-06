@@ -1,5 +1,7 @@
 package jplat.core.trans.impl;
 
+import com.google.gson.JsonElement;
+
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.session.JSession;
 import jplat.core.trans.JAppConnectInfo;
@@ -11,8 +13,6 @@ import jplat.error.exception.JTransException;
 import jplat.tools.coder.JsonCoder;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.data.validate.JBeanValidateUtils;
-
-import com.google.gson.JsonElement;
 
 /**
  * 一次服务请求的上下文.
@@ -195,7 +195,12 @@ public abstract class JBaseAppContext implements JAppContext
 			session = getSession();
 		}
 		
+		//有会话则肯定存在客户信息.
 		userInfo = session.getUserInfo();
+/*		if ( userInfo == null )
+		{
+			throw new JSystemException(KPlatResponseCode.CD_NO_SESSION,KPlatResponseCode.MSG_NO_SESSION);
+		}*/
 		
 		return userInfo;
 	}

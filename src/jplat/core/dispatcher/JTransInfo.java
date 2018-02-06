@@ -75,7 +75,7 @@ public class JTransInfo
 	
 	public void invokeTrans( Object ...args ) throws JSystemException
 	{
-		callCnt++;
+		callCnt++;					//not thread safe but it does not matter,I think.
 		lastCallDate = new Date();
 		
 		try {
