@@ -14,17 +14,17 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import jplat.error.exception.JSystemException;
 import jplat.tools.coder.JsonCoder;
 import jplat.tools.stream.JServletStreamUtils;
 import jplat.tools.string.DateUtil;
+import jplat.tools.string.JRandomUtil;
 import jplat.tools.string.StringUtil;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HealthChecker
@@ -171,6 +171,15 @@ public class HealthChecker
 		
 		retMap.put("http_headers", headMap);
 		retMap.put("http_cookies", cookieMap);
+		
+		//用于测试Cookie.
+		String ckKey = JRandomUtil.getRandomSequence(5);
+		String ckValue = JRandomUtil.getRandomSequence(24);
+		Cookie retCk = new Cookie(ckKey,ckValue);
+		response.addCookie(retCk);
+		
+		//
+		retMap.put("testCookie", ckKey+"="+ckValue);
 
 		String jsonStr = JsonCoder.toJsonString(retMap);
 		byte[] outData = jsonStr.getBytes();
@@ -188,6 +197,7 @@ public class HealthChecker
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 //		RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
 //		return retMap;
 	}
