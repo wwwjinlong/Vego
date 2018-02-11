@@ -2,23 +2,20 @@ package jplat.core.session.redis;
 
 import java.util.Map;
 
-import jplat.base.constant.KConfigKeys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.session.JSession;
+import jplat.core.session.JSessionUtils;
 import jplat.core.trans.JIUserInfo;
 import jplat.error.exception.JSystemException;
 import jplat.tools.coder.JsonCoder;
-import jplat.tools.config.JConfigManager;
 import jplat.tools.string.DateUtil;
 import jplat.tools.string.JRandomUtil;
 import jplat.tools.string.StringUtil;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import z.log.tracelog.XLog;
 
 /**
  * Redis会话实现类,只有在认证通过之后才建立会话.
@@ -30,7 +27,7 @@ public class JRedisSession implements JSession
 {
 	private static Logger logger = LoggerFactory.getLogger(JRedisSession.class);
 	
-	private static Class usrInfoClass = getUserClass();
+	private static Class usrInfoClass = JSessionUtils.getUserClass();
 	
 	private static JRedisConnector connector = JRedisConnector.getInstance();
 	
@@ -208,22 +205,6 @@ public class JRedisSession implements JSession
 	public boolean getEncryptKey(String type, String encKey) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-	
-	private static Class getUserClass()
-	{
-		String userInfoClz = JConfigManager.getInstance().getSystemConfig().getString(KConfigKeys.USER_INFO_KCLASS);
-		logger.info(XLog.SYS_INIT+"__USER_INFO_CLASS="+userInfoClz);
-		try
-		{
-			return Class.forName(userInfoClz);
-		}
-		catch (ClassNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException("ERROR:no user info class found.");
-		}
 	}
 	
 /*	public static void main(String args[]) throws JSystemException

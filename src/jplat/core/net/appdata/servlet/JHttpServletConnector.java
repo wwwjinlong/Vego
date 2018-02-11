@@ -47,7 +47,7 @@ public class JHttpServletConnector implements IAppDataConnector
 	public byte[] readInputBytes( JAppContext context ) throws JSystemException
 	{
 		JServletAppContext appCtx = (JServletAppContext)context;
-		return readInputBytes__(appCtx.getRequest());
+		return readInputBytes__(appCtx.getRequest(),MAX_PACKET_LENGTH);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class JHttpServletConnector implements IAppDataConnector
 	 * @throws IOException
 	 * @throws JSystemException 
 	 */
-	private byte[] readInputBytes__( HttpServletRequest request ) throws JSystemException
+	private byte[] readInputBytes__( HttpServletRequest request, int maxBts ) throws JSystemException
 	{
 		// String contentType = request.getContentType();
 /*		if ( request == null )
@@ -103,10 +103,10 @@ public class JHttpServletConnector implements IAppDataConnector
 				}
 
 				totalLen += len;
-				if ( totalLen > MAX_PACKET_LENGTH )
+				if ( totalLen >  maxBts )
 				{
 					logger.error(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_DATACHECK, KTraceLog.EVENT_POINT,
-							"", JTraceLogUtils.buildUserData("HTTP_READ","DATA_OVERFLOW_ERR","total="+totalLen,"max="+MAX_PACKET_LENGTH)));
+							"", JTraceLogUtils.buildUserData("HTTP_READ","DATA_OVERFLOW_ERR","total="+totalLen,"max="+maxBts)));
 					throw new JSystemException(KPlatResponseCode.CD_APPCONN_ERROR,KPlatResponseCode.MSG_APPCONN_ERROR+"(09)");
 				}
 				

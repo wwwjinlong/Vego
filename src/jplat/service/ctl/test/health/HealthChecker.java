@@ -159,7 +159,7 @@ public class HealthChecker
 		if ( "POST".equalsIgnoreCase(request.getMethod()) )
 		{
 			try {
-				byte[] inDatas = JServletStreamUtils.readInputStream(request);
+				byte[] inDatas = JServletStreamUtils.readInputStream(request,5*1024*1025);
 				logger.info(String.format("FROM_REQ:length[%d],content=[%s]",inDatas.length,new String(inDatas,"utf-8")));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -177,6 +177,7 @@ public class HealthChecker
 		String ckKey = JRandomUtil.getRandomSequence(5);
 		String ckValue = JRandomUtil.getRandomSequence(24);
 		Cookie retCk = new Cookie(ckKey,ckValue);
+		retCk.setPath("/");
 		response.addCookie(retCk);
 		
 		//

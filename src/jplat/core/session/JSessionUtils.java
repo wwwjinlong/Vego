@@ -6,11 +6,11 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import jplat.base.constant.KPlatResponseCode;
-import jplat.core.session.redis.JRedisSession;
+import jplat.base.constant.KConfigKeys;
 import jplat.core.trans.JAppConnectInfo;
 import jplat.error.exception.JSystemException;
-import jplat.tools.config.JAppConfig;
+import jplat.tools.config.JConfigManager;
+import jplat.tools.config.JSystemConfig;
 
 public class JSessionUtils {
 	/**
@@ -60,6 +60,28 @@ public class JSessionUtils {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			return null;
+		}
+	}
+	
+	/**
+	 * 获取客户信息的类.
+	 * 2018年2月11日下午4:06:25
+	 * getUserClass
+	 * @return
+	 */
+	public static Class getUserClass()
+	{
+		JSystemConfig config = JConfigManager.getInstance().getSystemConfig();
+		String userInfoClz = config.getString(KConfigKeys.USER_INFO_KCLASS);
+		try
+		{
+			return Class.forName(userInfoClz);
+		}
+		catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("ERROR:no user info class found.");
 		}
 	}
 }

@@ -5,9 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import z.log.tracelog.XLog;
 import jplat.tools.coder.MD5Utils;
-import jplat.tools.file.XFileTools;
+import z.log.tracelog.XLog;
 
 public class JRandomFileReader
 {
@@ -82,8 +81,8 @@ public class JRandomFileReader
 		reader.close();
 		writer.close();
 		
-		byte[] d = XFileTools.loadFile(file.getAbsolutePath());
-		byte[] d1 = XFileTools.loadFile(file.getAbsolutePath());
+		byte[] d = JFileUtils.loadFile(file.getAbsolutePath());
+		byte[] d1 = JFileUtils.loadFile(file.getAbsolutePath());
 		
 		XLog.log("%d-%d", d.length,d1.length);
 		XLog.log("%s-%s", MD5Utils.getMD5(d),MD5Utils.getMD5(d1));

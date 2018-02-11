@@ -1,17 +1,11 @@
 package jplat.tools.coder;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
-
-import jplat.tools.file.XFileTools;
-import z.log.tracelog.XLog;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
+
+import jplat.tools.stream.JFileUtils;
 
 public class JsonCoder
 {
@@ -61,7 +55,7 @@ public class JsonCoder
 		String filepath = "C:\\Users\\zhangcq\\Desktop\\临时文件夹\\33.json";
 		String charset = "gbk";
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String uglyJsonStr = XFileTools.loadFile(filepath, charset);
+		String uglyJsonStr = JFileUtils.loadFile(filepath, charset);
 		JsonParser jp = new JsonParser();
 		JsonElement je = jp.parse(uglyJsonStr);
 		String prettyJsonStr2 = gson.toJson(je);
