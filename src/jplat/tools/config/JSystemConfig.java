@@ -164,6 +164,7 @@ public class JSystemConfig extends JBasePropertiesReader
 		sbuffer.append(new SimpleDateFormat(dateFmt).format(new Date()))
 					.append(fixSample.substring( fixLen > 0 ? fixLen : 0 ));
 		
+		long tmpSeq = 0;
 		try
 		{
 			randLock.lock();
@@ -171,6 +172,8 @@ public class JSystemConfig extends JBasePropertiesReader
 			{
 				seqno = 775809;
 			}
+			
+			tmpSeq = seqno;
 		}
 		catch ( Exception e )
 		{
@@ -182,7 +185,7 @@ public class JSystemConfig extends JBasePropertiesReader
 			randLock.unlock();
 		}
 		
-		String tempStr = String.format("%0"+seqLen+"d", seqno);
+		String tempStr = String.format("%0"+seqLen+"d", tmpSeq);
 		sbuffer.append(tempStr.subSequence(tempStr.length()-seqLen, tempStr.length()));
 		
 		return sbuffer.toString();

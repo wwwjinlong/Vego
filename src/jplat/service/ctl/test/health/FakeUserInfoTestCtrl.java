@@ -1,5 +1,6 @@
 package jplat.service.ctl.test.health;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,23 +43,33 @@ public class FakeUserInfoTestCtrl extends JAppBaseService
 	 * @throws JSystemException
 	 */
 	@RequestMapping("/test/user/query.do")
-	@ResponseBody
-	public JIUserInfo loadFakeUserInfo( HttpServletRequest request, HttpServletResponse response ) throws JSystemException
+	public void loadFakeUserInfo( HttpServletRequest request, HttpServletResponse response ) throws JSystemException
 	{
 		//优先使用传过来的.
-		String qSessId = request.getParameter("sessId");
+/*		String qSessId = request.getParameter("sessId");
 		if ( JStringUtil.isEmpty(qSessId) )
 		{
 			qSessId = JSessionUtils.obtSessionId(request);
-		}
+		}*/
+		
+		String qSessId = JSessionUtils.obtSessionId(request);
 		
 		logger.info("FAKE_SESSIONID_QUERY:sessId={}",qSessId);
 		JSession jsession = new JSessionFactory().setHttpRequest(request)
 				.setSessionId(qSessId).createSession(false);
 		
+//		String usrStr = jsession.getValue(JSession.K_USER_INFO);
 		JIUserInfo userInfo = jsession.getUserInfo();
 		
-		return userInfo;
+		logger.info("USER[{}]",JsonCoder.toJsonString(userInfo));
+		
+		try {
+			JServletStreamUtils.writeHttpResponse(response, JsonCoder.toJsonString(userInfo).getBytes("utf-8"), "application/json");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new JSystemException(KPlatResponseCode.CD_IO_ERR,KPlatResponseCode.MSG_IO_ERR);
+		}
 	}
 	
 	/**
@@ -85,7 +96,7 @@ public class FakeUserInfoTestCtrl extends JAppBaseService
 		boolean ifCreate = false;
 		
 		//优先使用传过来的.
-		String qSessId = request.getParameter("sessId");
+/*		String qSessId = request.getParameter("sessId");
 		if ( JStringUtil.isEmpty(qSessId) )
 		{
 			//然后从cookie和头里面取.
@@ -96,6 +107,12 @@ public class FakeUserInfoTestCtrl extends JAppBaseService
 				ifCreate = true;
 				qSessId = "";
 			}
+		}*/
+		
+		String qSessId = JSessionUtils.obtSessionId(request);
+		if ( JStringUtil.isEmpty(qSessId) )
+		{
+			ifCreate = true;
 		}
 		
 		logger.info("FAKE_SESSIONID_ADD_IN:sessId={},create={}",qSessId,ifCreate);
