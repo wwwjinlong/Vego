@@ -1,6 +1,6 @@
 package jplat.tools.little;
 
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JDoubleUtils
 {
@@ -22,24 +22,24 @@ public class JDoubleUtils
 	public static void main( String args[] )
 	{
 		double rate = 0.0035;
-		XLog.log(format(rate*100*360,4));
+		JLog.log(format(rate*100*360,4));
 		
 		if ( isEqual((rate/100)*100,rate ) )
 		{
-			XLog.log("isEqual ---------true");
+			JLog.log("isEqual ---------true");
 		}
 		else
 		{
-			XLog.log("isEqual ---------false");
+			JLog.log("isEqual ---------false");
 		}
 		
 		if ( (rate/100)*100 == rate )
 		{
-			XLog.log("== ---------true");
+			JLog.log("== ---------true");
 		}
 		else
 		{
-			XLog.log("== ---------false");
+			JLog.log("== ---------false");
 		}
 	}
 }

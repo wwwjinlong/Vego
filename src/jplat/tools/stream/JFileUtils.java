@@ -15,7 +15,7 @@ import java.net.URL;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JFileUtils {
 	
@@ -39,7 +39,7 @@ public class JFileUtils {
 			if ( url == null )
 			{
 				String errmsg = String.format("fail to load file[%s]", filepath);
-				XLog.logerr(errmsg);
+				JLog.logerr(errmsg);
 				throw new RuntimeException("NOFILE:"+errmsg);
 			}
 

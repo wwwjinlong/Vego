@@ -21,7 +21,7 @@ import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JRedisConnector
 {
@@ -54,7 +54,7 @@ public class JRedisConnector
 
 		//这里还是依赖了Spring哦.
 		//		QConfig qconfig = AppContextHolder.getContext().getBean(QConfig.class);
-		XLog.loginit("REDIS_POOL_INIT start");
+		JLog.loginit("REDIS_POOL_INIT start");
 		
 		String server = null;
 		int port=0,maxConn=0,minIdle=0, maxWaitMills=0,timeout=0;
@@ -89,7 +89,7 @@ public class JRedisConnector
 			password = "";
 		}
 		
-		XLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_SUCCESS, "none",
+		JLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_SUCCESS, "none",
 				JTraceLogUtils.buildUserData("REDIS_POOL_INIT",server,""+port,password,""+timeout,JsonCoder.toJsonString(config))));
 				
 		return true;

@@ -2,9 +2,17 @@ package jplat.tools.config;
 
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 import jplat.core.session.redis.JRedisConnector;
 
+/**
+ * 该类用于系统启动时候加载基本参数，
+ * 这样参数加载问题会在平台启动过程中提前暴露出来，
+ * 而不是在运行使用时暴露出来。
+ * 
+ * @author zhangcq
+ *
+ */
 public class JConfigLoader
 {
 	public JConfigLoader()
@@ -20,7 +28,7 @@ public class JConfigLoader
 		//加载配置.
 		JAppConfig.getConfigCache();
 		
-		XLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_POINT, "none",
+		JLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_POINT, "none",
 							JTraceLogUtils.buildUserData("JAppConfig",""+JAppConfig.getConfigCache().SESSION_TYPE,JAppConfig.getTempDir("0"))));
 		
 		JRedisConnector.getInstance();

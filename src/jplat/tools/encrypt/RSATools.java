@@ -14,7 +14,7 @@ import jplat.tools.config.JAppConfig;
 import jplat.tools.config.JConfigManager;
 import jplat.tools.stream.JFileUtils;
 import jplat.tools.string.StringUtil;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class RSATools
 {
@@ -33,7 +33,7 @@ public class RSATools
 		long startTime = new Date().getTime();
 		initSec();
 		long endTime = new Date().getTime();
-		XLog.loginit("RSATools init,time-spent="+(endTime - startTime));
+		JLog.loginit("RSATools init,time-spent="+(endTime - startTime));
 	}
 
 	private static final class SingleHolder
@@ -129,7 +129,7 @@ public class RSATools
 				RSAPrivateKey priKey = RSAUtils.getPriKey( jksFile, storePass, keyAlias, keyPass );
 				RSAPublicKey pubKey = RSAUtils.getPubkey(jksFile, storePass, keyAlias);
 
-				XLog.loginit("RSATools.jksFile="+jksFile);
+				JLog.loginit("RSATools.jksFile="+jksFile);
 
 				module = priKey.getModulus();
 				priexp = priKey.getPrivateExponent();

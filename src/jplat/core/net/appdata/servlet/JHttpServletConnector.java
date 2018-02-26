@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JHttpServletConnector implements IAppDataConnector
 {
@@ -92,13 +92,13 @@ public class JHttpServletConnector implements IAppDataConnector
 				//EOF
 				if ( len == -1 )
 				{
-					logger.info(String.format(XLog.CONN_MARK+"__FINAL_READ:fl_len=%d,tl_len=%d,cl_len=%d",len,totalLen,cl));
+					logger.info(String.format(JLog.CONN_MARK+"__FINAL_READ:fl_len=%d,tl_len=%d,cl_len=%d",len,totalLen,cl));
 					break;
 				}
 				
 				if ( JAppConfig.getConfigCache().LOG_PRINT_IO )
 				{
-					logger.info(XLog.CONN_MARK+"__ONE_READ:rd_len="+len);
+					logger.info(JLog.CONN_MARK+"__ONE_READ:rd_len="+len);
 				}
 
 				totalLen += len;

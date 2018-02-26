@@ -3,7 +3,7 @@ package jplat.tools.config;
 import java.io.File;
 
 import jplat.tools.string.StringUtil;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 不会变或者高频访问的建议改成常量.
@@ -15,7 +15,19 @@ import z.log.tracelog.XLog;
 public class JAppConfig
 {
 	//管理类单例，可以重载参数.
-	public static JConfigManager confManager = JConfigManager.getInstance();
+	//static静态元素按照声明顺序执行.
+	public static JConfigManager confManager;
+	
+	static
+	{
+		confManager = JConfigManager.getInstance();
+		try {
+			confManager.load();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	//临时目录.
 	private static String TEMP_HOME = getTempHome();
@@ -99,6 +111,6 @@ public class JAppConfig
 
 	public static void main(String args[])
 	{
-		XLog.log(getTempDir("1"));
+		JLog.log(getTempDir("1"));
 	}
 }

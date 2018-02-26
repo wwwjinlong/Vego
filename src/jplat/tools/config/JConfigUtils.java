@@ -8,7 +8,7 @@ import java.util.Properties;
 import jplat.tools.stream.JFileUtils;
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JConfigUtils
 {
@@ -19,7 +19,7 @@ public class JConfigUtils
 			proPath = proPath+".properties";
 		}
 		
-		XLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_START, "nomark", "load:"+proPath));
+		JLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_START, "nomark", "load:"+proPath));
 		InputStream is = null;
 		try
 		{
@@ -28,7 +28,7 @@ public class JConfigUtils
 			Properties prop = new Properties();
 			prop.load(is);
 			
-			XLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_SUCCESS, "nomark", "success load:"+proPath));
+			JLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_SUCCESS, "nomark", "success load:"+proPath));
 			return prop;
 		}
 		catch (IOException e)

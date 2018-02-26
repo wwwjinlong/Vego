@@ -9,7 +9,7 @@ import jplat.tools.coder.Base64Coder;
 import jplat.tools.encrypt.AESTools;
 import jplat.tools.encrypt.RSATools;
 import jplat.tools.string.JRandomUtil;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 加密构造类.
@@ -34,7 +34,7 @@ public class EncryptTestUtils
 		Field[] fds = map.getClass().getDeclaredFields();
 		for ( int i = 0; i < fds.length; ++i )
 		{
-			XLog.log("%d:%s", i,fds[i].getName());
+			JLog.log("%d:%s", i,fds[i].getName());
 		}
 	}
 	
@@ -45,7 +45,7 @@ public class EncryptTestUtils
 		String aesKey = "HrO96bda7XHNOKHx";
 		
 		String cipher = showAESCipher(plainText,aesKey);
-		XLog.log("STAFF cihper:[%s]", cipher);
+		JLog.log("STAFF cihper:[%s]", cipher);
 		
 		String encData = "wgIcg7BspAg2MoXYjcmoicF838wGTzEvKDH5TpN0YS3NgfHMaCaJ5w40hZj7EsJig1d3VyM0QTpbn3YwCtrt2sV14iuvZjpGhOIiZZhBiLE/HBvxF1eVKNcffxJwnC4fc/je8xh80+/TozCPkmTzV+DDRgJCZdCOZkdKG6UCy9OgO2zyzwJSChkI9tp+snlvn/gOfj+Aa9x2Nl8RAamUWhYBRk8CTczLeMitZreICDtgPnCdIsSIFmqdvulq1U5o";
 		doAESDecrypt(encData,aesKey);
@@ -60,17 +60,17 @@ public class EncryptTestUtils
 //		String aesKey = JRandomUtil.getRandomSequence(16);
 		String aesKey = "ur1nTk_l_mCFRNfP";
 		
-		XLog.log("-----------AESKey-plain=[ %s ]", aesKey);
+		JLog.log("-----------AESKey-plain=[ %s ]", aesKey);
 		
 		//加密aes密钥.
 		String aes64Key = showRSACipher(aesKey);
-		XLog.log("AESKey-RSA64:%s", aes64Key);
+		JLog.log("AESKey-RSA64:%s", aes64Key);
 		
 		//加密明文
 		String cipher64 = showAESCipher(reqMsg,aesKey);
 		
 		//拼接密文.
-		XLog.log("----------RSACipher:[%s#%s]", aes64Key,cipher64);
+		JLog.log("----------RSACipher:[%s#%s]", aes64Key,cipher64);
 		
 		/****************** 解密 ********************/
 		//返回的base64密文.
@@ -86,7 +86,7 @@ public class EncryptTestUtils
 		{
 			String base64Data = Base64Coder.toBase64String(AESTools.encrypt(plainText.getBytes("utf-8"), aesKey));
 			
-			XLog.log("AES64Data:%s", base64Data);
+			JLog.log("AES64Data:%s", base64Data);
 			
 			return base64Data;
 		} catch (UnsupportedEncodingException e) {
@@ -112,7 +112,7 @@ public class EncryptTestUtils
 			byte[] encBytes = Base64Coder.fromBase64String(encdata);
 			byte[] plainData = AESTools.decrypt(encBytes, keyStr);
 			
-			XLog.log("AES-PLAIN:%s", new String(plainData,"utf-8"));
+			JLog.log("AES-PLAIN:%s", new String(plainData,"utf-8"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,7 +144,7 @@ public class EncryptTestUtils
 		try {
 			String plainText = RSATools.getInstance().dencryptData(encData,"utf-8");
 			
-			XLog.log("RSA_plainText:%s", plainText);
+			JLog.log("RSA_plainText:%s", plainText);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

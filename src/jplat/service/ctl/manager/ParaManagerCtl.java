@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jplat.error.exception.JSystemException;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.config.JConfigManager;
 
@@ -22,9 +23,9 @@ public class ParaManagerCtl
 	
 	@RequestMapping("/mgr/config/reload.do")
 	@ResponseBody
-	public Map<String,String> reloadConfigs( HttpServletRequest request, HttpServletResponse response )
+	public Map<String,Object> reloadConfigs( HttpServletRequest request, HttpServletResponse response )
 	{
-		Map<String,String> retMap = new HashMap<String,String>();
+		Map<String,Object> retMap = new HashMap<String,Object>();
 		retMap.put("appName", request.getContextPath() );
 		
 		String token = request.getParameter("authkey");
@@ -35,10 +36,20 @@ public class ParaManagerCtl
 			return null;
 		}
 
-		configMr.reload();
+		try {
+			configMr.load();
+		} catch (JSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			retMap.put("retcode", "9999");
+			retMap.put("retmsg", e.getMessage());
+			return retMap;
+		}
 
 		retMap.put("version",JAppConfig.getConfigCache().MGR_CONFIG_VERSION);
 		retMap.put("create_time", configMr.getSystemConfigLoader().create_time );
+		retMap.put("parameters", JAppConfig.getConfigCache().convert2Map());
 		
 		return retMap;
 	}

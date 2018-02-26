@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import jplat.error.exception.JSystemException;
 import jplat.tools.string.JRandomUtil;
 import jplat.tools.string.StringUtil;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 序号发生器.
@@ -52,7 +52,7 @@ public class JSequenceGenerator
 			fixSample = JRandomUtil.randomInt(12);
 		}
 		
-		XLog.loginit("SENQUENCE_PREFIX:%s", fixSample);
+		JLog.loginit("SENQUENCE_PREFIX:%s", fixSample);
 	}
 	
 	/**

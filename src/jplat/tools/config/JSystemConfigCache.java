@@ -1,5 +1,9 @@
 package jplat.tools.config;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
 import jplat.core.session.JSession;
 
 /**
@@ -128,9 +132,77 @@ public class JSystemConfigCache
 		return JConfigManager.getInstance().getSystemConfigLoader();
 	}
 	
+	public Map<String,Object> convert2Map()
+	{
+		Map<String,Object> paraMap = new HashMap<String,Object>();
+		
+		Field[] fields = getClass().getDeclaredFields();
+		
+		for ( int i = 0; i < fields.length; ++i )
+		{
+			Field field = fields[i];
+			
+			//该方法不是说这个成员是否可以访问，而是说是否进行访问检查.
+			//由于访问检查比较消耗性能 所以默认关闭的把.
+//			JLog.log("toString called:%s",field.isAccessible());
+//			if (field.isAccessible())		//false even for public field.
+//			{
+				try {
+					Object value = field.get(this);
+					if ( value == null )
+					{
+						value = "__NULL__";
+					}
+					
+					paraMap.put(field.getName(), value);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//			}
+		}
+		
+		return paraMap;
+	
+	}
+	
 	//TODO 打印所有参数.
 	public String toString()
 	{
-		return "";
+		StringBuilder sbuilder = new StringBuilder();
+		
+		Field[] fields = getClass().getDeclaredFields();
+		
+		for ( int i = 0; i < fields.length; ++i )
+		{
+			Field field = fields[i];
+			
+			//该方法不是说这个成员是否可以访问，而是说是否进行访问检查.
+			//由于访问检查比较消耗性能 所以默认关闭的把.
+//			JLog.log("toString called:%s",field.isAccessible());
+//			if (field.isAccessible())		//false even for public field.
+//			{
+				try {
+					Object value = field.get(this);
+					if ( value == null )
+					{
+						value = "__NULL__";
+					}
+					
+					sbuilder.append(field.getName()).append(":").append(value.toString()).append("|");
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//			}
+		}
+		
+		return sbuilder.toString();
 	}
 }

@@ -1,8 +1,10 @@
 package jplat.tools.config;
 
 
+import a.autocode.utils.QLogUtils;
+import jplat.base.constant.KPlatResponseCode;
 import jplat.error.exception.JSystemException;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 配置管理类.可以动态重载参数.
@@ -16,10 +18,9 @@ public class JConfigManager
 	private JSystemConfigLoader configEntity;
 	
 	private JSystemConfigCache configCache;
-	
+			
 	private JConfigManager()
 	{
-		init();
 	}
 	
 	private static final class Holer
@@ -31,35 +32,19 @@ public class JConfigManager
 	{
 		return Holer.config;
 	}
-	
-	private void init()
+
+	public JConfigManager load() throws JSystemException
 	{
-		try {
+		try
+		{
 			configEntity = new JSystemConfigLoader();
-		} catch (JSystemException e) {
+			configCache = new JSystemConfigCache();
+			return this;
+		} catch ( JSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
 		}
-	}
-	
-	public boolean reload()
-	{
-		JSystemConfigLoader cnf = null;
-		try {
-			cnf = new JSystemConfigLoader();
-			if ( cnf != null )
-			{
-				configEntity = cnf;
-				configCache = new JSystemConfigCache();
-				return true;
-			}
-			
-		} catch (JSystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return false;
 	}
 	
 	//获取配置加载类
@@ -84,10 +69,10 @@ public class JConfigManager
 	{
 		JSystemConfigLoader config = JConfigManager.getInstance().getSystemConfigLoader();
 		
-		XLog.log("default config[%s]", config.getString("mdp.health"));
-		XLog.log("sys_env config[%s]", config.getString("app.test"));
-		XLog.log("classpath config[%s]", config.getString("keyPassword"));
-		XLog.log("system absolute config[%s]", config.getString("cache.clear.runtime"));
+		JLog.log("default config[%s]", config.getString("mdp.health"));
+		JLog.log("sys_env config[%s]", config.getString("app.test"));
+		JLog.log("classpath config[%s]", config.getString("keyPassword"));
+		JLog.log("system absolute config[%s]", config.getString("cache.clear.runtime"));
 		
 	}
 	private static void reloadTest()
@@ -101,8 +86,13 @@ public class JConfigManager
 				e.printStackTrace();
 			}
 			
-			JConfigManager.getInstance().reload();
-			XLog.log("--------------------"+JConfigManager.getInstance().getSystemConfigLoader().getString("app.name"));
+			try {
+				JConfigManager.getInstance().load();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			JLog.log("--------------------"+JConfigManager.getInstance().getSystemConfigLoader().getString("app.name"));
 		}
 	}
 }

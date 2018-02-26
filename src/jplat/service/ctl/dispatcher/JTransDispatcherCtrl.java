@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 该类用于将url按照规则映射到类名，用于解决对不同渠道的相同接口复用的问题.

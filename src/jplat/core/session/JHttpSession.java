@@ -12,7 +12,7 @@ import jplat.error.exception.JSystemException;
 import jplat.tools.config.JAppConfig;
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 会话实现类.

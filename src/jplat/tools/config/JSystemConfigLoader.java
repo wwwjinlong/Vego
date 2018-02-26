@@ -6,7 +6,7 @@ import java.util.List;
 import jplat.error.exception.JSystemException;
 import jplat.tools.string.DateUtil;
 import jplat.tools.string.JStringUtil;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 父类基础类.该类不应该直接使用和修改.
@@ -32,7 +32,7 @@ public class JSystemConfigLoader extends JBasePropertiesReader
 	{
 		//环境类型
 		String envType = getEnvValue(envFile,"environment");
-		XLog.loginit("USE ENV_TYPE:"+envType);
+		JLog.loginit("USE ENV_TYPE:"+envType);
 		
 		//parser config paths.
 		String[] confPaths = getProFileArray(envFile,envType);
@@ -116,8 +116,8 @@ public class JSystemConfigLoader extends JBasePropertiesReader
 		int id = 0;
 		for ( Object s1 : proList )
 		{
-			XLog.log("NAME=[%s]", s1.getClass().getName());
-			XLog.log("__CONF_LIST[%d][%s]", ++id,s1 );
+			JLog.log("NAME=[%s]", s1.getClass().getName());
+			JLog.log("__CONF_LIST[%d][%s]", ++id,s1 );
 		}
 		
 		return proList.toArray(new String[]{});

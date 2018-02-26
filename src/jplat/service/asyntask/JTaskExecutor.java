@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jplat.tools.config.JAppConfig;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JTaskExecutor
 {
@@ -38,7 +38,7 @@ public class JTaskExecutor
 		
 		blockQueue = new ArrayBlockingQueue(maxQueue);
 		
-		XLog.loginit(String.format("__JTaskExecutor:asyntask.coretd=%d,asyntask.maxtd=%d,asyntask.maxque=%d",corePoolSize,maxPoolSize,maxQueue));
+		JLog.loginit(String.format("__JTaskExecutor:asyntask.coretd=%d,asyntask.maxtd=%d,asyntask.maxque=%d",corePoolSize,maxPoolSize,maxQueue));
 		fixedThreadPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 20, TimeUnit.SECONDS, blockQueue );
 		
 		fixedThreadPool.allowCoreThreadTimeOut(true);

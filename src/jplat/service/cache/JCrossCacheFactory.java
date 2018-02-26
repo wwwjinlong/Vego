@@ -2,7 +2,7 @@ package jplat.service.cache;
 
 import jplat.error.exception.JSystemException;
 import jplat.service.cache.redis.JRedisCache;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JCrossCacheFactory
 {
@@ -66,15 +66,15 @@ public class JCrossCacheFactory
 		ic.set("k", "123456");
 
 		String key1 = ic.get("k");
-		XLog.log("1keyid=%s,k1=%s",ic.getID(), key1);
-		XLog.log("2is_new=%s", ic.isNew()+"");
-		XLog.log("30--------------------");
+		JLog.log("1keyid=%s,k1=%s",ic.getID(), key1);
+		JLog.log("2is_new=%s", ic.isNew()+"");
+		JLog.log("30--------------------");
 
 		ic = buildCrossCache(ic.getID(),999);
-		XLog.log("4is_new=%s,value=%s", ic.isNew()+"",ic.get("k"));
+		JLog.log("4is_new=%s,value=%s", ic.isNew()+"",ic.get("k"));
 
 		ic = getCrossCache(ic.getID());
-		XLog.log("5-------------"+ic.get("k"));
+		JLog.log("5-------------"+ic.get("k"));
 	}
 	
 	public static void main(String args[])

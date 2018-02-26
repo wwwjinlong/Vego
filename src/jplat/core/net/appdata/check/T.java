@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 import jplat.core.session.redis.JRedisConnector;
 import jplat.tools.string.JDateUtil;
 
@@ -29,7 +29,7 @@ public class T {
 			}
 			
 			int seconds = (int)((nextDate.getTime()- (new Date().getTime()))/1000);
-			XLog.log("seconds=%s", seconds+"");
+			JLog.log("seconds=%s", seconds+"");
 		}
 	
 	}

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import jplat.tools.coder.MD5Utils;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JRandomFileReader
 {
@@ -84,7 +84,7 @@ public class JRandomFileReader
 		byte[] d = JFileUtils.loadFile(file.getAbsolutePath());
 		byte[] d1 = JFileUtils.loadFile(file.getAbsolutePath());
 		
-		XLog.log("%d-%d", d.length,d1.length);
-		XLog.log("%s-%s", MD5Utils.getMD5(d),MD5Utils.getMD5(d1));
+		JLog.log("%d-%d", d.length,d1.length);
+		JLog.log("%s-%s", MD5Utils.getMD5(d),MD5Utils.getMD5(d1));
 	}
 }

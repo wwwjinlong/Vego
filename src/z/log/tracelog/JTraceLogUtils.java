@@ -180,9 +180,9 @@ public class JTraceLogUtils
 	public static void main( String args[])
 	{
 		String mark = JRandomUtil.getRandomSequence(KTraceLog.MARK_LENGTH);
-		XLog.log(getTraceLog(KTraceLog.ACTION_CALL_ICOP,KTraceLog.EVENT_SUCCESS,mark,"1234567|1234567890123456|交易成功......"));
+		JLog.log(getTraceLog(KTraceLog.ACTION_CALL_ICOP,KTraceLog.EVENT_SUCCESS,mark,"1234567|1234567890123456|交易成功......"));
 		
-		XLog.log(buildUserData("A","B","C333"));
+		JLog.log(buildUserData("A","B","C333"));
 		
 /*		try
 		{
@@ -204,9 +204,9 @@ public class JTraceLogUtils
 		} catch (InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 //			e.printStackTrace();
-			XLog.log("%s",getExceptionLog(e,0,true));
-			XLog.log("-------------");
-			XLog.log("%s",getExceptionFullLog(e,0,true));
+			JLog.log("%s",getExceptionLog(e,0,true));
+			JLog.log("-------------");
+			JLog.log("%s",getExceptionFullLog(e,0,true));
 		}
 	}
 	

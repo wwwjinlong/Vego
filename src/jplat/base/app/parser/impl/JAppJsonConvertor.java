@@ -31,7 +31,7 @@ import jplat.error.exception.JSystemException;
 import jplat.tools.coder.JsonCoder;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.string.StringUtil;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 该类负责和App的解包和组包，以及加解密.
@@ -140,7 +140,7 @@ public class JAppJsonConvertor implements IAppPacketConvertor
 		JsonElement reqBody = jo.get(KDolphinq.H_RSP_BODY);
 		if ( reqHeader == null )
 		{
-			logger.error("{}无法获取从输入数据获得head",XLog.CONN_MARK);
+			logger.error("{}无法获取从输入数据获得head",JLog.CONN_MARK);
 			throw new JSystemException(KPlatResponseCode.CD_INPUT_ERROR,KPlatResponseCode.MSG_INPUT_ERROR+",t=hd");
 		}
 

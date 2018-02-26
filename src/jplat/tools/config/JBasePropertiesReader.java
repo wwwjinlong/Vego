@@ -15,7 +15,7 @@ import jplat.tools.string.StringUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 该类的子类或者工具类应该实现为一个单例或者常量类.
@@ -34,7 +34,7 @@ public class JBasePropertiesReader
 	{
 		if ( StringUtil.isEmpty(envType) )
 		{
-			XLog.loginit("ERROR:the envType of resource-files cannot be empty.");
+			JLog.loginit("ERROR:the envType of resource-files cannot be empty.");
 			throw new RuntimeException("the envType cannot be empty.");
 		}
 
@@ -44,7 +44,7 @@ public class JBasePropertiesReader
 			
 
 			Properties props = JConfigUtils.loadPropertis(confpath);
-			XLog.loginit("__LOAD PROPERTY SUCCESS["+confpath+"]");
+			JLog.loginit("__LOAD PROPERTY SUCCESS["+confpath+"]");
 
 			Iterator<Entry<Object, Object>> it = props.entrySet().iterator();  
 			while (it.hasNext())
@@ -55,12 +55,12 @@ public class JBasePropertiesReader
 
 				if( print )
 				{
-					XLog.loginit("property-value:[ %s = %s ]", key,value );
+					JLog.loginit("property-value:[ %s = %s ]", key,value );
 				}
 
 				if ( cMap.get(key) != null )
 				{
-					XLog.loginit("ERROR[%s]", "duplicate config key:"+key);
+					JLog.loginit("ERROR[%s]", "duplicate config key:"+key);
 					throw new JSystemException(KPlatResponseCode.CD_CONF_ERROR,KPlatResponseCode.MSG_CONF_ERROR);
 				}
 				
@@ -159,7 +159,7 @@ public class JBasePropertiesReader
 		}
 		catch (MissingResourceException e)
 		{
-			XLog.loginit("ERROR:fail to tell the environment type");
+			JLog.loginit("ERROR:fail to tell the environment type");
 			throw e;
 		}
 	}

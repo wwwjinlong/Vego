@@ -1,6 +1,6 @@
 package z.log.tracelog;
 
-public class XLog
+public class JLog
 {
 	//域客户端通讯相关的日志.
 	public static String CONN_MARK = "__APPCONN:";

@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * 日期格式
@@ -511,7 +511,7 @@ public class DateUtil
 	}
 	public static void main(String[] args)
 	{
-		XLog.log(DateUtil.format(DateUtil.beforeDate(new Date(), -1),DateUtil.FMT_YMD));
+		JLog.log(DateUtil.format(DateUtil.beforeDate(new Date(), -1),DateUtil.FMT_YMD));
 		
 		//计算后一天.
 		Date nextDate = JDateUtil.beforeDate(new Date(), -1);
@@ -519,7 +519,7 @@ public class DateUtil
 		long nowTime = new Date().getTime();
 		long seconds = nextTime - nowTime;
 		
-		XLog.log("seconds=next=%s,now=%s,secnods%s",nextTime+"",nowTime+"", seconds+"");
+		JLog.log("seconds=next=%s,now=%s,secnods%s",nextTime+"",nowTime+"", seconds+"");
 	}
 	
 	/**

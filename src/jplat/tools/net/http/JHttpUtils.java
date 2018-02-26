@@ -18,7 +18,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 public class JHttpUtils
 {
@@ -34,7 +34,7 @@ public class JHttpUtils
 
 	public static byte[] executeUrl( String url, String method ) throws IOException
 	{
-		XLog.log("__executeUrl:"+url);
+		JLog.log("__executeUrl:"+url);
 
 		URL realUrl = new URL(url);
 		HttpURLConnection  conn = (HttpURLConnection)realUrl.openConnection();
@@ -54,14 +54,14 @@ public class JHttpUtils
 		Map<String,List<String>> paraMap = conn.getHeaderFields();
 		for ( Map.Entry<String, List<String>> ent : paraMap.entrySet() )
 		{
-			XLog.log("key="+ent.getKey()+":value"+ent.getValue());
+			JLog.log("key="+ent.getKey()+":value"+ent.getValue());
 		}
 
 		int sumLen = conn.getContentLength();
-		XLog.log("totallen="+sumLen);
+		JLog.log("totallen="+sumLen);
 		if ( sumLen <= 0 )
 		{
-			XLog.log("no data need to be read:content-length="+sumLen);
+			JLog.log("no data need to be read:content-length="+sumLen);
 			return "".getBytes();
 		}
 
@@ -244,6 +244,6 @@ public class JHttpUtils
 		String url = "http://162.16.2.157:8080/directBank/login/third/auth.do?autype=K&sessId=4653B4F21522B715DFE397D3DC0A55AB";
 		String retMsg = getHttpString(url,"utf-8");
 		
-		XLog.log(retMsg);
+		JLog.log(retMsg);
 	}
 }

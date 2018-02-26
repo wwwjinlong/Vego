@@ -18,7 +18,7 @@ import jplat.tools.config.JAppConfig;
 import jplat.tools.string.JStringUtil;
 import jplat.tools.string.StringUtil;
 import jplat.tools.trace.JAppLogUtils;
-import z.log.tracelog.XLog;
+import z.log.tracelog.JLog;
 
 /**
  * App请求服务类的应用上下文工厂实现，
@@ -55,7 +55,7 @@ public class JAppContextFactory
 		//解析请求头.
 		if( !parseHttpHeaderInfo( appCtx ) )
 		{
-			logger.error(XLog.CONN_MARK+"解析请求头出错.");
+			logger.error(JLog.CONN_MARK+"解析请求头出错.");
 			throw new JSystemException(KPlatResponseCode.CD_INPUT_ERROR,KPlatResponseCode.MSG_INPUT_ERROR+",t=h");
 		}
 		
