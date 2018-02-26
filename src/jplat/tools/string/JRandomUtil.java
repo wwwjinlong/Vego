@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import jplat.tools.config.JConfigManager;
+import jplat.tools.little.JSequenceGenerator;
 
 /**
  * 
@@ -151,7 +152,7 @@ public class JRandomUtil {
 	 */
 	public static String getSeqNo()
 	{
-		return JConfigManager.getInstance().getSystemConfig().getUniqNumberStr(4,"yyMMddHHmmssSSS",6);
+		return JSequenceGenerator.getInstance().getUniqNumberStr(4,"yyMMddHHmmssSSS",6);
 	}
 
 /*	public static void main( String args[] )

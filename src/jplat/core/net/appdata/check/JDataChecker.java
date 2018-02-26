@@ -19,6 +19,7 @@ import z.log.tracelog.KTraceLog;
 
 /**
  * 防重检测是用于特定报文请求进行防重放控制.
+ * 出于效率原因，只有在特定的交易中才进行调用.
  * @author zhangcq
  * @date Feb 13, 2017
  * @comment
@@ -68,7 +69,7 @@ public class JDataChecker implements IDataChecker
 	@Override
 	public boolean openCheck( JAppContext appCtx, String funCode ) {
 		// TODO Auto-generated method stub
-		return JAppConfig.CHK_REPEAT;
+		return JAppConfig.getConfigCache().SAFE_REPEAT;
 	}
 
 	/**

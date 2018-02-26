@@ -75,7 +75,7 @@ public class JBasePropertiesReader
 		String value = cMap.get(key);
 		if ( must && StringUtils.isEmpty(value) )
 		{
-			throw new RuntimeException( "WARN,key-property [" + key + "] not found" );
+			throw new RuntimeException( "ERROR,key-property [" + key + "] not found" );
 		}
 
 		return value;

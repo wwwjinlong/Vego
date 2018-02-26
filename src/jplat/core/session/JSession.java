@@ -1,8 +1,7 @@
 package jplat.core.session;
 
-import jplat.base.constant.KConfigKeys;
 import jplat.core.trans.JIUserInfo;
-import jplat.tools.config.JConfigManager;
+import jplat.tools.config.JAppConfig;
 
 /**
  * 会话对象接口类. 1. 由于Redis和序列化限制,暂不支持泛型序列化. 2. 但是可以将泛型对象包装成
@@ -15,8 +14,7 @@ import jplat.tools.config.JConfigManager;
 public interface JSession
 {
 	//超时时间.
-	public static final int TIME_OUT = JConfigManager.getInstance()
-			.getSystemConfig().getInt(KConfigKeys.SESSION_EXPIRE_TIME, 900);
+	public static final int TIME_OUT = JAppConfig.getConfigCache().SESSION_TIME_OUT;
 	
 	//HTTP类型的会话.
 	public static final int SESS_HTTP = 200;

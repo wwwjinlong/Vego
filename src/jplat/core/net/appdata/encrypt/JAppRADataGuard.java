@@ -45,7 +45,7 @@ public class JAppRADataGuard implements IDataGuard
 		//进行数据校验.
 		String encData=null;
 		try {
-			encData = new String(rawData,JAppConfig.PACK_CHARSET);
+			encData = new String(rawData,JAppConfig.getConfigCache().APP_CHARSET);
 			logger.debug("FROM_APP_RAW:["+encData+"]");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -146,7 +146,7 @@ public class JAppRADataGuard implements IDataGuard
 		try
 		{
 			//获取aes密钥.
-			String aesKey = RSATools.getInstance().dencryptData(Base64Coder.fromBase64String(a64),JAppConfig.PACK_CHARSET);
+			String aesKey = RSATools.getInstance().dencryptData(Base64Coder.fromBase64String(a64),JAppConfig.getConfigCache().APP_CHARSET);
 			
 			//save the aes key to build response.
 			appCtx.getConnInfo().setEncKey(aesKey);

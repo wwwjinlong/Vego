@@ -1,6 +1,5 @@
 package jplat.service.trans.health;
 
-
 import jplat.core.trans.JAppContext;
 import jplat.service.ctl.test.model.HealthReqModel;
 import jplat.service.ctl.test.model.HealthRspModel;
@@ -21,7 +20,7 @@ public class HealthCheckerTrans
 	{
 		logger.info(String.format("TEST:recv trans message.[%s]",reqModel.getMsg()));
 		
-		rspModel.setAppName(JAppConfig.APP_NAME);
+		rspModel.setAppName(JAppConfig.getConfigCache().APP_NAME);
 		rspModel.setIpAddr(JStringUtil.getLocalIP());
 		rspModel.setRetMsg("pong");
 		rspModel.setYourMsg(reqModel.getMsg());

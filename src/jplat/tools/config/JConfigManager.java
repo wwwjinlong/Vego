@@ -5,14 +5,17 @@ import jplat.error.exception.JSystemException;
 import z.log.tracelog.XLog;
 
 /**
- * 配置管理类.
+ * 配置管理类.可以动态重载参数.
+ * 动态载入参数和程序运行效率是需要权衡的，一旦可以动态则需要每次都从参数文件读取.
  * @author zhangcq
  * @date Jan 5, 2017
  * @comment
  */
 public class JConfigManager
 {
-	private JSystemConfig configEntity;
+	private JSystemConfigLoader configEntity;
+	
+	private JSystemConfigCache configCache;
 	
 	private JConfigManager()
 	{
@@ -32,7 +35,7 @@ public class JConfigManager
 	private void init()
 	{
 		try {
-			configEntity = new JSystemConfig();
+			configEntity = new JSystemConfigLoader();
 		} catch (JSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,12 +44,13 @@ public class JConfigManager
 	
 	public boolean reload()
 	{
-		JSystemConfig cnf = null;
+		JSystemConfigLoader cnf = null;
 		try {
-			cnf = new JSystemConfig();
+			cnf = new JSystemConfigLoader();
 			if ( cnf != null )
 			{
 				configEntity = cnf;
+				configCache = new JSystemConfigCache();
 				return true;
 			}
 			
@@ -58,9 +62,16 @@ public class JConfigManager
 		return false;
 	}
 	
-	public JSystemConfig getSystemConfig()
+	//获取配置加载类
+	public JSystemConfigLoader getSystemConfigLoader()
 	{
 		return configEntity;
+	}
+	
+	//获取配置常用类.
+	public JSystemConfigCache getSystemConfigCache()
+	{
+		return configCache;
 	}
 	
 	public static void main(String args[])
@@ -71,7 +82,7 @@ public class JConfigManager
 	/********** test code *************/
 	private static void loadTest()
 	{
-		JSystemConfig config = JConfigManager.getInstance().getSystemConfig();
+		JSystemConfigLoader config = JConfigManager.getInstance().getSystemConfigLoader();
 		
 		XLog.log("default config[%s]", config.getString("mdp.health"));
 		XLog.log("sys_env config[%s]", config.getString("app.test"));
@@ -91,7 +102,7 @@ public class JConfigManager
 			}
 			
 			JConfigManager.getInstance().reload();
-			XLog.log("--------------------"+JConfigManager.getInstance().getSystemConfig().getString("app.name"));
+			XLog.log("--------------------"+JConfigManager.getInstance().getSystemConfigLoader().getString("app.name"));
 		}
 	}
 }

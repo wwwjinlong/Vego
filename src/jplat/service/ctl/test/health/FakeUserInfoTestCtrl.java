@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import a.autocode.KAutoCode;
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.session.JSession;
 import jplat.core.session.JSessionFactory;
@@ -27,6 +27,12 @@ import jplat.tools.config.JAppConfig;
 import jplat.tools.stream.JServletStreamUtils;
 import jplat.tools.string.JStringUtil;
 
+/****
+ * 由于这些请求涉及到了会话机制和客户信息等，无法在QAutoKit中完成。
+ * 故写在框架工程中。不同系统需要各自实现这些请求，以便完成测试.
+ * @author zhangcq
+ *
+ */
 @Controller
 public class FakeUserInfoTestCtrl extends JAppBaseService
 {
@@ -43,8 +49,13 @@ public class FakeUserInfoTestCtrl extends JAppBaseService
 	 * @throws JSystemException
 	 */
 	@RequestMapping("/test/user/query.do")
-	public void loadFakeUserInfo( HttpServletRequest request, HttpServletResponse response ) throws JSystemException
+	public void queryFakeUserInfo( HttpServletRequest request, HttpServletResponse response ) throws JSystemException
 	{
+		if ( !JAppConfig.getConfigCache().IS_TEST )
+		{
+			throw new JSystemException(KPlatResponseCode.CD_CONF_NOT_FOUND,KPlatResponseCode.MSG_CONF_NOT_FOUND);
+		}
+		
 		//优先使用传过来的.
 /*		String qSessId = request.getParameter("sessId");
 		if ( JStringUtil.isEmpty(qSessId) )
@@ -88,7 +99,7 @@ public class FakeUserInfoTestCtrl extends JAppBaseService
 	{
 		Map<String,String> retMap = new HashMap<String,String>();
 		
-		if ( !JAppConfig.IS_TEST )
+		if ( !JAppConfig.getConfigCache().IS_TEST )
 		{
 			throw new JSystemException(KPlatResponseCode.CD_CONF_NOT_FOUND,KPlatResponseCode.MSG_CONF_NOT_FOUND);
 		}
@@ -139,6 +150,26 @@ public class FakeUserInfoTestCtrl extends JAppBaseService
 		retMap.put("retMsg", "success");
 		retMap.put("sessId", jsession.getSessionID() );
 		
+		return retMap;
+	}
+	
+	/**
+	 * 加载客户信息模板模板.
+	 * 2018年2月24日上午9:34:01
+	 * loadFakeUserInfo
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws JSystemException
+	 */
+	@RequestMapping("/test/user/load.do")
+	@ResponseBody
+	public Map<String,String> loadFakeUserInfo( HttpServletRequest request, HttpServletResponse response ) throws JSystemException
+	{
+		Map<String,String> retMap = new HashMap<String,String>();
+		
+		JServletStreamUtils.readInputString(request, KAutoCode.charset_def, 1024*1024);
+//		JFileUtils.loadFile(KAutoCode., charset)
 		return retMap;
 	}
 }

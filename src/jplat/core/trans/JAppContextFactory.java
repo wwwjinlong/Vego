@@ -7,19 +7,17 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jplat.base.app.parser.IAppPacketConvertor;
-import jplat.base.app.parser.impl.JAppJsonConvertor;
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.trans.impl.JServletAppContext;
 import jplat.error.exception.JSystemException;
-import jplat.tools.config.JLogConfig;
+import jplat.tools.config.JAppConfig;
 import jplat.tools.string.JStringUtil;
 import jplat.tools.string.StringUtil;
 import jplat.tools.trace.JAppLogUtils;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
 import z.log.tracelog.XLog;
 
 /**
@@ -109,7 +107,7 @@ public class JAppContextFactory
 	{
 		JServletAppContext appCtx = (JServletAppContext)__appCtx;
 		
-		if( JLogConfig.canPrintNetInfo() )
+		if( JAppConfig.getConfigCache().LOG_PRINT_NET )
 		{
 			logger.info("__HTTP_HEADERS:"+JAppLogUtils.getHeadValues((appCtx.getRequest())));
 		}
@@ -172,7 +170,7 @@ public class JAppContextFactory
 		{
 			for ( int i = 0; i < cookies.length; ++i )
 			{
-				if( JLogConfig.canPrintNetInfo() )
+				if( JAppConfig.getConfigCache().LOG_PRINT_NET )
 				{
 					logger.info("Cookies:"+cookies[i].getName()+"="+cookies[i].getValue());
 				}

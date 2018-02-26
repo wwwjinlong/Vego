@@ -106,7 +106,7 @@ public abstract class JBaseAppContext implements JAppContext
 	{
 		reqBody = JsonCoder.fromJson((JsonElement)reqBody, clazz);
 		
-		if ( JAppConfig.IS_TEST && validate )
+		if ( JAppConfig.getConfigCache().IS_TEST && validate )
 		{
 			JBeanValidateUtils.validate(reqBody);
 		}

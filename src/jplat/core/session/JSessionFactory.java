@@ -4,8 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.session.redis.JRedisSession;
-import jplat.core.trans.JAppContext;
-import jplat.core.trans.impl.JServletAppContext;
 import jplat.error.exception.JSystemException;
 import jplat.tools.config.JAppConfig;
 
@@ -16,7 +14,7 @@ import jplat.tools.config.JAppConfig;
  */
 public class JSessionFactory
 {
-	public static int sessType = JAppConfig.SESSION_TYPE;
+	public static int sessType = JAppConfig.getConfigCache().SESSION_TYPE;
 	
 	public HttpServletRequest request;
 	public String sessionId;

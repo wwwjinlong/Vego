@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jplat.base.constant.KPlatResponseCode;
 import jplat.error.exception.JSystemException;
-import jplat.tools.config.JLogConfig;
+import jplat.tools.config.JAppConfig;
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
 import z.log.tracelog.XLog;
@@ -80,7 +80,7 @@ public class JServletStreamUtils
 					break;
 				}
 				
-				if ( JLogConfig.canPrintNetRead())
+				if ( JAppConfig.getConfigCache().LOG_PRINT_IO )
 				{
 					logger.info(XLog.CONN_MARK+"__ONE_READ:rd_len="+len);
 				}

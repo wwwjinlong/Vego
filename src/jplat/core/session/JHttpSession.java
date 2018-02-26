@@ -3,15 +3,13 @@ package jplat.core.session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import jplat.base.constant.KConfigKeys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.trans.JIUserInfo;
 import jplat.error.exception.JSystemException;
-import jplat.tools.config.JConfigManager;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
+import jplat.tools.config.JAppConfig;
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
 import z.log.tracelog.XLog;
@@ -26,7 +24,7 @@ public class JHttpSession implements JSession
 {
 	private static Logger logger = LoggerFactory.getLogger(JHttpSession.class);
 	
-	private static Class usrInfoClass = getUserClass();
+	private static Class usrInfoClass = JSessionUtils.getUserClass();
 	
 	HttpSession session;
 	HttpServletRequest request;
@@ -199,21 +197,5 @@ public class JHttpSession implements JSession
 	public boolean getEncryptKey(String type, String encKey) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-	
-	private static Class getUserClass()
-	{
-		String userInfoClz = JConfigManager.getInstance().getSystemConfig().getString(KConfigKeys.USER_INFO_KCLASS);
-		logger.info(XLog.SYS_INIT+"__USER_INFO_CLASS="+userInfoClz);
-		try
-		{
-			return Class.forName(userInfoClz);
-		}
-		catch (ClassNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException("ERROR:no user info class found.");
-		}
 	}
 }

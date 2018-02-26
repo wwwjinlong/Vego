@@ -6,13 +6,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jplat.tools.config.JConfigManager;
-
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import jplat.tools.config.JAppConfig;
+import jplat.tools.config.JConfigManager;
 
 @Controller
 public class ParaManagerCtl
@@ -29,15 +30,15 @@ public class ParaManagerCtl
 		String token = request.getParameter("authkey");
 		JConfigManager configMr = JConfigManager.getInstance();
 		
-		if ( !token.equals(configMr.getSystemConfig().getString("auth.key")) )
+		if ( !token.equals(JAppConfig.getConfigCache().MGR_AUTHKEY) )
 		{
 			return null;
 		}
 
 		configMr.reload();
 
-		retMap.put("version",configMr.getSystemConfig().getString("cnf.version"));
-		retMap.put("create_time", configMr.getSystemConfig().create_time );
+		retMap.put("version",JAppConfig.getConfigCache().MGR_CONFIG_VERSION);
+		retMap.put("create_time", configMr.getSystemConfigLoader().create_time );
 		
 		return retMap;
 	}

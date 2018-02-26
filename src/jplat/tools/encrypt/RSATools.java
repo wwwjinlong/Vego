@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import jplat.base.constant.KPlatResponseCode;
+import jplat.tools.config.JAppConfig;
 import jplat.tools.config.JConfigManager;
 import jplat.tools.stream.JFileUtils;
 import jplat.tools.string.StringUtil;
@@ -18,7 +19,7 @@ import z.log.tracelog.XLog;
 public class RSATools
 {
 	/*************** 证书私钥 bankofchangsha *******************/
-	private static String RSA_JKS_PATH = "rsa.jkspath"; //密钥配置文件.
+	private static String RSA_JKS_PATH = JAppConfig.getConfigCache().SAFE_JKS_PATH; //密钥配置文件.
 
 	/********* 密钥信息 ************/
 	private BigInteger module;		//密码模数（即大数的乘积)
@@ -92,16 +93,10 @@ public class RSATools
 	private void initSec()
 	{
 		//加载加密配置文件.
-		String encFile = JConfigManager.getInstance().getSystemConfig().getString(RSA_JKS_PATH);
-		if ( StringUtil.isEmpty(encFile) )
-		{
-			throw new RuntimeException(KPlatResponseCode.CD_CONF_ERROR+":value of "+RSA_JKS_PATH+" is not found, init for RSA fail.");
-		}
-
 		Properties encPro = new Properties();
 		InputStream inStream = null;
 		try {
-			inStream = JFileUtils.loadFileStream(encFile);
+			inStream = JFileUtils.loadFileStream(RSA_JKS_PATH);
 			encPro.load( inStream );
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

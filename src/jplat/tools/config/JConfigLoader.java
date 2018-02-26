@@ -16,8 +16,12 @@ public class JConfigLoader
 	{
 		//加载JAppConfig
 		JAppConfig.getTempDir("1");
+		
+		//加载配置.
+		JAppConfig.getConfigCache();
+		
 		XLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_POINT, "none",
-							JTraceLogUtils.buildUserData("JAppConfig",""+JAppConfig.SESSION_TYPE,JAppConfig.getTempDir("0"))));
+							JTraceLogUtils.buildUserData("JAppConfig",""+JAppConfig.getConfigCache().SESSION_TYPE,JAppConfig.getTempDir("0"))));
 		
 		JRedisConnector.getInstance();
 	}

@@ -6,10 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jplat.base.constant.KConfigKeys;
 import jplat.tools.coder.JsonCoder;
-import jplat.tools.config.JConfigManager;
-import jplat.tools.config.JSystemConfig;
+import jplat.tools.config.JAppConfig;
 import jplat.tools.string.JRandomUtil;
 import jplat.tools.string.JStringUtil;
 
@@ -62,17 +60,17 @@ public class JRedisConnector
 		int port=0,maxConn=0,minIdle=0, maxWaitMills=0,timeout=0;
 
 //		ResourceBundle resBundle = ResourceBundle.getBundle("conf/redis_conf");
-		JSystemConfig proReader = JConfigManager.getInstance().getSystemConfig();
+		server = JAppConfig.getConfigCache().REDIS_SERVER;
+		port = JAppConfig.getConfigCache().REDIS_PORT;
+		timeout = JAppConfig.getConfigCache().REDIS_CONNECT_TIME_OUT;
 
-		server = proReader.getString(KConfigKeys.REDIS_SERVER,true);
-		port = proReader.getInt(KConfigKeys.REDIS_PORT,true);
-		timeout = proReader.getInt(KConfigKeys.REDIS_CONNECT_TIME_OUT,true);	
-
-		maxWaitMills = proReader.getInt(KConfigKeys.REDIS_MAX_WAIT_MILLIS,true);
-		maxConn = proReader.getInt(KConfigKeys.REDIS_MAX_CONNECT,true);
-		minIdle = proReader.getInt(KConfigKeys.REDIS_MIN_IDLE,true);
-		password = proReader.getString(KConfigKeys.REDIS_PASSWORD, null);
-
+		maxWaitMills = JAppConfig.getConfigCache().REDIS_MAX_WAIT_MILLIS;
+		maxConn = JAppConfig.getConfigCache().REDIS_MAX_CONNECT;
+		minIdle = JAppConfig.getConfigCache().REDIS_MIN_IDLE;
+		password = JAppConfig.getConfigCache().REDIS_PASSWORD;
+		
+		//print the monitor log or not.
+		logOn = JAppConfig.getConfigCache().REDIS_LOGON;
 
 		JedisPoolConfig config = new JedisPoolConfig();
 		//		config.setBlockWhenExhausted(true);
@@ -80,9 +78,6 @@ public class JRedisConnector
 		config.setMinIdle(minIdle);
 		config.setMaxWaitMillis(maxWaitMills);
 		
-		//print the monitor log or not.
-		logOn = "true".equals(proReader.getString(KConfigKeys.REDIS_LOGON));
-
 		//5000ms超时是可以，默认是2000
 		redisPool = new JedisPool(config,server,port,timeout);
 		if ( JStringUtil.isNotEmpty(password) )

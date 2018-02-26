@@ -15,7 +15,6 @@ import jplat.core.trans.JAppContext;
 import jplat.core.trans.impl.JServletAppContext;
 import jplat.error.exception.JSystemException;
 import jplat.tools.config.JAppConfig;
-import jplat.tools.config.JLogConfig;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class JHttpServletConnector implements IAppDataConnector
 	private static Logger logger = LoggerFactory.getLogger(JHttpServletConnector.class);
 	
 	//default 5M max.
-	private static int MAX_PACKET_LENGTH = JAppConfig.getInt("max_packet_len",5242880);
+	private int MAX_PACKET_LENGTH = JAppConfig.getConfigCache().APP_MAX_PACKET;
 	
 	public String readInputString( JAppContext context,String charset ) throws JSystemException 
 	{
@@ -97,7 +96,7 @@ public class JHttpServletConnector implements IAppDataConnector
 					break;
 				}
 				
-				if ( JLogConfig.canPrintNetRead())
+				if ( JAppConfig.getConfigCache().LOG_PRINT_IO )
 				{
 					logger.info(XLog.CONN_MARK+"__ONE_READ:rd_len="+len);
 				}
@@ -107,6 +106,8 @@ public class JHttpServletConnector implements IAppDataConnector
 				{
 					logger.error(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_DATACHECK, KTraceLog.EVENT_POINT,
 							"", JTraceLogUtils.buildUserData("HTTP_READ","DATA_OVERFLOW_ERR","total="+totalLen,"max="+maxBts)));
+					
+					ins.close();
 					throw new JSystemException(KPlatResponseCode.CD_APPCONN_ERROR,KPlatResponseCode.MSG_APPCONN_ERROR+"(09)");
 				}
 				

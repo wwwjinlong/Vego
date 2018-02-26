@@ -100,7 +100,7 @@ public class JSessionFilter implements Filter
 		catch( Throwable e )
 		{
 			exmark = "EX";
-			logger.error("FATAL_ERR:{}",JTraceLogUtils.getExceptionFullLog(e, JAppConfig.LOG_TRACE_CNT, true));
+			logger.error("FATAL_ERR:{}",JTraceLogUtils.getExceptionFullLog(e, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
 			
 			writeResponse((HttpServletResponse) response);
 			return;
@@ -141,7 +141,7 @@ public class JSessionFilter implements Filter
 		
 		byte[] exDatas;
 		try {
-			exDatas = exMsg.getBytes(JAppConfig.PACK_CHARSET);
+			exDatas = exMsg.getBytes(JAppConfig.getConfigCache().APP_CHARSET);
 			response.setContentType("application/json");
 			response.setContentLength(exDatas.length);
 			response.getOutputStream().write(exDatas);

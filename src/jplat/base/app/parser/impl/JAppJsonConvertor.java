@@ -82,6 +82,7 @@ public class JAppJsonConvertor implements IAppPacketConvertor
 			
 			//兼容浏览器.
 			Cookie sessCookie = new Cookie(JAppConnectInfo.H_HTOKEN_NAME,session.getSessionID());
+			sessCookie.setPath("/");
 			response.addCookie(sessCookie);
 		}
 		
@@ -96,7 +97,7 @@ public class JAppJsonConvertor implements IAppPacketConvertor
 		try
 		{
 			//可能是密文.
-			json = new String( guarder.dencryptData(context, dataConnector.readInputBytes(context)), JAppConfig.PACK_CHARSET );
+			json = new String( guarder.dencryptData(context, dataConnector.readInputBytes(context)), JAppConfig.getConfigCache().APP_CHARSET );
 			
 			logger.info(new StringBuilder("__FROM_APP1:[").append(json).append("]").toString());
 		}
@@ -191,7 +192,7 @@ public class JAppJsonConvertor implements IAppPacketConvertor
 		logger.info("__TO_APP1:"+toApp);
 		try
 		{
-			byte[] retData = guarder.encryptData( appCtx, toApp.getBytes(JAppConfig.PACK_CHARSET) );
+			byte[] retData = guarder.encryptData( appCtx, toApp.getBytes(JAppConfig.getConfigCache().APP_CHARSET) );
 			dataConnector.writeOutputBytes(appCtx, retData);
 		}
 		catch (UnsupportedEncodingException e)

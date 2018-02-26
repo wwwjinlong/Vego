@@ -4,12 +4,10 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import jplat.tools.config.JConfigManager;
-import jplat.tools.config.JSystemConfig;
-
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import jplat.tools.config.JAppConfig;
 import z.log.tracelog.XLog;
 
 public class JTaskExecutor
@@ -34,11 +32,10 @@ public class JTaskExecutor
 	 */
 	private void init()
 	{
-		JSystemConfig sysConfig = JConfigManager.getInstance().getSystemConfig();
+		int corePoolSize = JAppConfig.getConfigCache().ASYN_CORE_POOL_SIZE;
+		int maxPoolSize =JAppConfig.getConfigCache().ASYN_MAX_POOL_SIZE;
+		int maxQueue = JAppConfig.getConfigCache().ASYN_MAX_QUEUE_SIZE;
 		
-		int corePoolSize = sysConfig.getInt("asyntask.coretd",100);
-		int maxPoolSize = sysConfig.getInt("asyntask.maxtd",1000);
-		int maxQueue = sysConfig.getInt("asyntask.maxque",8000);
 		blockQueue = new ArrayBlockingQueue(maxQueue);
 		
 		XLog.loginit(String.format("__JTaskExecutor:asyntask.coretd=%d,asyntask.maxtd=%d,asyntask.maxque=%d",corePoolSize,maxPoolSize,maxQueue));

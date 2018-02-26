@@ -33,7 +33,7 @@ public abstract class JAppBaseService
 	@ResponseBody
 	public String execJTransExceptionHandler( JTransException transException, HttpServletResponse response )
 	{
-		logger.error(JTraceLogUtils.getExceptionFullLog(transException, JAppConfig.LOG_TRACE_CNT, true));
+		logger.error(JTraceLogUtils.getExceptionFullLog(transException, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
 		return JAppLogUtils.buildErrMessage(transException,response );
 	}
 	
@@ -41,10 +41,10 @@ public abstract class JAppBaseService
 	@ResponseBody
 	public String execJSystemExceptionHandler( JSystemException sysException, HttpServletResponse response )
 	{
-		logger.error(JTraceLogUtils.getExceptionFullLog(sysException, JAppConfig.LOG_TRACE_CNT, true));
+		logger.error(JTraceLogUtils.getExceptionFullLog(sysException, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
 		if ( sysException.sysEx != null )
 		{
-			logger.error(JTraceLogUtils.getExceptionFullLog(sysException.sysEx, JAppConfig.LOG_TRACE_CNT, true));
+			logger.error(JTraceLogUtils.getExceptionFullLog(sysException.sysEx, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
 		}
 		
 		return JAppLogUtils.buildErrMessage(sysException,response);  

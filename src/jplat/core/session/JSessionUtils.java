@@ -6,11 +6,9 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import jplat.base.constant.KConfigKeys;
 import jplat.core.trans.JAppConnectInfo;
 import jplat.error.exception.JSystemException;
-import jplat.tools.config.JConfigManager;
-import jplat.tools.config.JSystemConfig;
+import jplat.tools.config.JAppConfig;
 
 public class JSessionUtils {
 	/**
@@ -71,8 +69,7 @@ public class JSessionUtils {
 	 */
 	public static Class getUserClass()
 	{
-		JSystemConfig config = JConfigManager.getInstance().getSystemConfig();
-		String userInfoClz = config.getString(KConfigKeys.USER_INFO_KCLASS);
+		String userInfoClz = JAppConfig.getConfigCache().SESSION_USER_CLAZZ;
 		try
 		{
 			return Class.forName(userInfoClz);
