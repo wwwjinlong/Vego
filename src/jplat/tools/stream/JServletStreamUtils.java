@@ -23,6 +23,17 @@ public class JServletStreamUtils
 {
 	private static Logger logger = LoggerFactory.getLogger(JServletStreamUtils.class);
 	
+	public static String readInputString( HttpServletRequest request) throws JSystemException
+	{
+		try {
+			return new String ( readInputStream( request, JAppConfig.getConfigCache().APP_MAX_PACKET ), JAppConfig.getConfigCache().APP_CHARSET);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new JSystemException( KPlatResponseCode.CD_IO_ERR,KPlatResponseCode.MSG_IO_ERR);
+		}
+	}
+	
 	public static String readInputString( HttpServletRequest request, String charset, int maxBts ) throws JSystemException
 	{
 		try {
@@ -106,6 +117,24 @@ public class JServletStreamUtils
 		}
 		
 		throw new JSystemException(KPlatResponseCode.CD_APPCONN_ERROR,KPlatResponseCode.MSG_APPCONN_ERROR);
+	}
+	
+	/**
+	 * 使用utf-8写入html.
+	 * 2018年2月27日上午11:38:19
+	 * writeHttpResponseUTF8
+	 * @param response
+	 * @param data
+	 * @throws JSystemException
+	 */
+	public static void writeHttpResponseUTF8( HttpServletResponse response, String data ) throws JSystemException
+	{
+		try {
+			writeHttpResponse(response,data.getBytes("utf-8"),"application/json;charset=utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**

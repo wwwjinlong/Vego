@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import a.autocode.KAutoCode;
+import autoplat.base.config.QAutoConfigUtils;
 import jplat.base.constant.KPlatResponseCode;
 import jplat.core.session.JSession;
 import jplat.core.session.JSessionFactory;
@@ -161,15 +161,23 @@ public class FakeUserInfoTestCtrl extends JAppBaseService
 	 * @param response
 	 * @return
 	 * @throws JSystemException
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping("/test/user/load.do")
-	@ResponseBody
-	public Map<String,String> loadFakeUserInfo( HttpServletRequest request, HttpServletResponse response ) throws JSystemException
+	public void loadFakeUserInfo( HttpServletRequest request, HttpServletResponse response ) throws JSystemException
 	{
 		Map<String,String> retMap = new HashMap<String,String>();
 		
-		JServletStreamUtils.readInputString(request, KAutoCode.charset_def, 1024*1024);
-//		JFileUtils.loadFile(KAutoCode., charset)
-		return retMap;
+		String fileName = JServletStreamUtils.readInputString(request);
+		if ( JStringUtil.isNotEmpty(fileName) )
+		{
+			fileName = fileName.trim();
+		}
+		
+		//加载模板
+		String userStr = QAutoConfigUtils.getUserTmpl(fileName);
+		
+		//写入模板数据.
+		JServletStreamUtils.writeHttpResponseUTF8(response,userStr);
 	}
 }
