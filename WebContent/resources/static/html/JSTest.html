@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JQuery测试</title>
+<script src="/VService/resources/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("button").click(function(){
+		$.ajax({url:"/VService/test/exception.do",async:true,success:function(result){
+			var retObj = JSON.parse(result);
+			var jstStr = JSON.stringify(retObj,null,4);
+			$("pre").html(jstStr);
+		}});
+	});
+});
+</script>
+</head>
+<body>
+<p><pre>测试1</pre></p>
+<button>修改内容</button>
+</body>
+</html>

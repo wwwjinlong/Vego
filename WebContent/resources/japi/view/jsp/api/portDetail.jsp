@@ -39,7 +39,11 @@
 				<td><span class="msgType">开发者</span></td>
 				<td>${returnResult.retData.developer}</td>
 				<td><span class="msgType">代码</span></td>
-				<td><a href="${contextName}/api/code/list.do?moduleCode=${returnResult.retData.moduleCode}&serviceCode=${returnResult.retData.serviceCode}">QuickCode</a></td>
+				<td>
+					<a href="${contextName}/api/code/list.do?moduleCode=${returnResult.retData.moduleCode}&serviceCode=${returnResult.retData.serviceCode}">QuickCode</a>
+					<span>&nbsp;|&nbsp;</span>
+					<a href="${contextName}/api/unit/testPage.do?moduleCode=${returnResult.retData.moduleCode}&serviceCode=${returnResult.retData.serviceCode}">UnitTest</a>
+				</td>
 			</tr>
 			<tr>
 				<td><span class="msgType">版本</span></td>

@@ -29,9 +29,24 @@
 	float:right;
 }
 
-#jsonArea {
-	width: 800px;
+#reqBody {
+	width: 600px;
+	height: 300px;
+}
+
+#retBody {
+	width: 600px;
 	height: 400px;
+}
+
+.mainGrid td
+{
+	border:none;
+}
+
+.mainlayout
+{
+	margin: 5px 5px 15px 30px;
 }
 
 .beanTheme {

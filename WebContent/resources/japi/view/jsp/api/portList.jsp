@@ -10,6 +10,7 @@
 <% int pseqno=0; %>
 <body id="main_body">
 	<div class="beanTheme">
+		<a href="${contextName}/api/all.do"><span class="remark">Home</span></a>
 		<span class="msgType">${returnResult.retData.moduleName}</span>
 		<span class="remark">by&nbsp;${returnResult.retData.developer}</span>
 	</div>
@@ -20,6 +21,7 @@
 				<th>序号</th>
 				<th>接口名称</th>
 				<th>接口地址</th>
+				<th>单元测试</th>
 				<th>接口版本</th>
 				<th>更新时间</th>
 				<th>更新内容</th>
@@ -30,6 +32,7 @@
 						<td><%=++pseqno %></td>
 						<td><a href="${contextName}/api/service/detail.do?moduleCode=${returnResult.retData.moduleCode}&serviceCode=${apiItem.serviceCode}&refUrl=${apiItem.refUrl}">${apiItem.chName}</a></td>
 						<td>${apiItem.refUrl}</td>
+						<td><a href="${contextName}/api/unit/testPage.do?moduleCode=${returnResult.retData.moduleCode}&serviceCode=${apiItem.serviceCode}">UnitTest</a></td>
 						<td>${apiItem.version}</td>
 						<td>${apiItem.gtime}</td>
 						<td>${apiItem.change}</td>
@@ -37,7 +40,7 @@
 				</c:forEach>
 			</c:if>
 			<tr>
-				<td colspan="5" align="right" style="border:none;"><a href="${contextName}/api/code/downloadAll.do?moduleCode=${returnResult.retData.moduleCode}"><span class="remark">download code</span></a></td>
+				<td colspan="6" align="right" style="border:none;"><a href="${contextName}/api/code/downloadAll.do?moduleCode=${returnResult.retData.moduleCode}"><span class="remark">download CODE</span></a></td>
 				<td colspan="1" align="right" style="border:none;"><a href="${contextName}/api/excel/download.do?moduleCode=${returnResult.retData.moduleCode}"><span class="remark">download EXCEL</span></a></td>
 			</tr>
 		</table>

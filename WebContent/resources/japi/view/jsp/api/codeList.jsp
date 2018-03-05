@@ -44,8 +44,6 @@
 						<a	href="${contextName}/api/java/viewcode.do?moduleCode=${returnResult.retData.moduleCode}&serviceCode=${returnResult.retData.serviceCode}&beanName=${item.beanName}">${item.beanName}</a>
 						<span>&nbsp;&nbsp;|</span>
 						<a href="${contextName}/api/java/download.do?moduleCode=${returnResult.retData.moduleCode}&serviceCode=${returnResult.retData.serviceCode}&beanName=${item.beanName}">download</a>
-						<span>&nbsp;&nbsp;|</span>
-						<a href="${contextName}/api/java/jsonstr.do?moduleCode=${returnResult.retData.moduleCode}&serviceCode=${returnResult.retData.serviceCode}&beanName=${item.beanName}">json</a>
 					</td>
 				</tr>
 			</c:forEach>
