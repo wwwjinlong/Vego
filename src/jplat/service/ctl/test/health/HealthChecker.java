@@ -2,6 +2,7 @@ package jplat.service.ctl.test.health;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.management.ThreadMXBean;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jplat.error.exception.JSystemException;
 import jplat.tools.coder.JsonCoder;
+import jplat.tools.config.JAppConfig;
 import jplat.tools.stream.JServletStreamUtils;
 import jplat.tools.string.DateUtil;
 import jplat.tools.string.JRandomUtil;
@@ -159,12 +161,13 @@ public class HealthChecker
 		if ( "POST".equalsIgnoreCase(request.getMethod()) )
 		{
 			try {
-				byte[] inDatas = JServletStreamUtils.readInputStream(request,5*1024*1025);
-				logger.info(String.format("FROM_REQ:length[%d],content=[%s]",inDatas.length,new String(inDatas,"utf-8")));
-			} catch (IOException e) {
+				String recvStr = JServletStreamUtils.readInputString(request);
+				logger.info("HEAD.DO_RECV[%s]",recvStr);
+				retMap.put("recv_data_len", recvStr.getBytes(JAppConfig.getConfigCache().APP_CHARSET));
+			} catch (JSystemException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (JSystemException e) {
+			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

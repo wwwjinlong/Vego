@@ -25,13 +25,7 @@ public class JServletStreamUtils
 	
 	public static String readInputString( HttpServletRequest request) throws JSystemException
 	{
-		try {
-			return new String ( readInputStream( request, JAppConfig.getConfigCache().APP_MAX_PACKET ), JAppConfig.getConfigCache().APP_CHARSET);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new JSystemException( KPlatResponseCode.CD_IO_ERR,KPlatResponseCode.MSG_IO_ERR);
-		}
+		return readInputString(request, JAppConfig.getConfigCache().APP_CHARSET, JAppConfig.getConfigCache().APP_MAX_PACKET);
 	}
 	
 	public static String readInputString( HttpServletRequest request, String charset, int maxBts ) throws JSystemException
