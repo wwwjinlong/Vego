@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jplat.base.constant.KPlatResponseCode;
+import jplat.core.cache.redis.JRedisConnector;
 import jplat.core.session.JSession;
 import jplat.core.session.JSessionUtils;
 import jplat.core.trans.JIUserInfo;

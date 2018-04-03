@@ -1,4 +1,4 @@
-package jplat.core.session.redis;
+package jplat.core.cache.redis;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class JRedisConnector
 //		ResourceBundle resBundle = ResourceBundle.getBundle("conf/redis_conf");
 		server = JAppConfig.getConfigCache().REDIS_SERVER;
 		port = JAppConfig.getConfigCache().REDIS_PORT;
-		timeout = JAppConfig.getConfigCache().REDIS_CONNECT_TIME_OUT;
+//		timeout = JAppConfig.getConfigCache().REDIS_CONNECT_TIME_OUT;
 
 		maxWaitMills = JAppConfig.getConfigCache().REDIS_MAX_WAIT_MILLIS;
 		maxConn = JAppConfig.getConfigCache().REDIS_MAX_CONNECT;
@@ -1144,14 +1144,14 @@ public class JRedisConnector
 	
 	private static void testConcurrent()
 	{
-		for ( int i = 0; i < 10; ++i )
+		for ( int i = 0; i < 2; ++i )
 		{
 			new Thread()
 			{
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					int max = 100;
+					int max = 2;
 					while ( --max > 0 )
 					{
 						String key = "K_"+JRandomUtil.getUUID();

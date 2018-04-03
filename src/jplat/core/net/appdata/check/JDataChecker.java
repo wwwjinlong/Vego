@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jplat.base.constant.KPlatResponseCode;
+import jplat.core.cache.redis.JRedisConnector;
 import jplat.core.net.appdata.IDataChecker;
-import jplat.core.session.redis.JRedisConnector;
 import jplat.core.trans.JAppContext;
 import jplat.error.exception.JSystemException;
 import jplat.tools.config.JAppConfig;

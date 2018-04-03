@@ -87,6 +87,12 @@ public class JSystemConfigCache
 	//最小空闲数.
 	public int REDIS_MIN_IDLE = getLoader().getInt("redis.min.idle",true);
 	
+	//集群服务地址和端口.
+	public String REDIS_CLUSTER = getLoader().getString("redis.cluster");
+	
+	//集群重定向最大次数.
+	public int REDIS_REDIRECT = getLoader().getInt("redis.redirect");
+	
 	/*********>>>>>>>> Redis配置 END <<<<<<< *****************/
 
 	/**************

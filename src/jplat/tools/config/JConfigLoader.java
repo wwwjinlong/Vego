@@ -2,8 +2,8 @@ package jplat.tools.config;
 
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
+import jplat.core.cache.redis.JRedisConnector;
 import z.log.tracelog.JLog;
-import jplat.core.session.redis.JRedisConnector;
 
 /**
  * 该类用于系统启动时候加载基本参数，

@@ -39,6 +39,8 @@ public class JConfigManager
 		{
 			configEntity = new JSystemConfigLoader();
 			configCache = new JSystemConfigCache();
+			
+			JLog.loginit( "__SYSTEM_CONFIG__=%s", this.toString() );
 			return this;
 		} catch ( JSystemException e) {
 			// TODO Auto-generated catch block

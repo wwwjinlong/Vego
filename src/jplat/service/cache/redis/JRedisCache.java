@@ -1,7 +1,7 @@
 package jplat.service.cache.redis;
 
 import jplat.base.constant.KPlatResponseCode;
-import jplat.core.session.redis.JRedisConnector;
+import jplat.core.cache.redis.JRedisConnector;
 import jplat.core.session.redis.JRedisSession;
 import jplat.error.exception.JSystemException;
 import jplat.service.cache.JICrossCache;
