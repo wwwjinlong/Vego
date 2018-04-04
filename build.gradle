@@ -23,6 +23,7 @@ plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'war'
     id 'eclipse-wtp'
+    id 'org.akhikhl.gretty' version '1.4.2'
 }
 
 /***
