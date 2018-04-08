@@ -13,16 +13,17 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+        // classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
     }
 }
 
- //     id 'java-library'
- //    id 'org.akhikhl.gretty' version '1.4.2'
 plugins {
     // Apply the java-library plugin to add support for Java Library
+    // id 'java-library'
     id 'war'
     id 'eclipse-wtp'
+    
+    //for appRun
     id 'org.akhikhl.gretty' version '1.4.2'
 }
 
