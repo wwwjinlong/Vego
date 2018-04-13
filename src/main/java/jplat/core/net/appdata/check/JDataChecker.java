@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jplat.base.constant.KPlatResponseCode;
-import jplat.core.cache.redis.JRedisConnector;
+import jplat.core.cache.redis.JRedisConnectorImpl;
 import jplat.core.net.appdata.IDataChecker;
 import jplat.core.trans.JAppContext;
 import jplat.error.exception.JSystemException;
@@ -54,7 +54,7 @@ public class JDataChecker implements IDataChecker
 		int secs = (int)JDateUtil.countSecondsFuture(new Date(), 1, "00:30:00");
 		String defKey = getDefendKey(funCode,"");
 		
-		long ret = JRedisConnector.getInstance().sadd( defKey, secs, rokcet);
+		long ret = JRedisConnectorImpl.getInstance().sadd( defKey, secs, rokcet);
 		if( ret != 1 )
 		{
 			logger.info(JTraceLogUtils.getTraceLog( KTraceLog.ACTION_DATACHECK,KTraceLog.EVENT_FAIL,mark,JTraceLogUtils.buildUserData("REPEAT",funCode,userData,rokcet) ));

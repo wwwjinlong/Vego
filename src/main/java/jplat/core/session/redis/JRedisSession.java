@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jplat.base.constant.KPlatResponseCode;
-import jplat.core.cache.redis.JRedisConnector;
+import jplat.core.cache.redis.JRedisConnectorImpl;
 import jplat.core.session.JSession;
 import jplat.core.session.JSessionUtils;
 import jplat.core.trans.JIUserInfo;
@@ -30,7 +30,7 @@ public class JRedisSession implements JSession
 	
 	private static Class usrInfoClass = JSessionUtils.getUserClass();
 	
-	private static JRedisConnector connector = JRedisConnector.getInstance();
+	private static JRedisConnectorImpl connector = JRedisConnectorImpl.getInstance();
 	
 	private String sessToken;				//有效token
 	private String createTime;				//首次创建时间.
@@ -49,7 +49,7 @@ public class JRedisSession implements JSession
 		createTime = DateUtil.todayStr(DateUtil.FMT_ALL);
 		
 		//检测是否存在.
-		if( connector.hset(sessToken,K_CREATE_TIME,createTime,TIME_OUT) == JRedisConnector.EX_OLD )
+		if( connector.hset(sessToken,K_CREATE_TIME,createTime,TIME_OUT) == JRedisConnectorImpl.EX_OLD )
 		{
 			logger.error(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_REDIS, KTraceLog.EVENT_FAIL, "", JTraceLogUtils.buildUserData("duplicate",sessToken)));
 			throw new JSystemException(KPlatResponseCode.CD_REDIS_SESSION_INIT_ERR,KPlatResponseCode.MSG_REDIS_SESSION_INIT_ERR);

@@ -2,7 +2,7 @@ package jplat.tools.config;
 
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import jplat.core.cache.redis.JRedisConnector;
+import jplat.core.cache.redis.JRedisConnectorImpl;
 import z.log.tracelog.JLog;
 
 /**
@@ -31,7 +31,7 @@ public class JConfigLoader
 		JLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_POINT, "none",
 							JTraceLogUtils.buildUserData("JAppConfig",""+JAppConfig.getConfigCache().SESSION_TYPE,JAppConfig.getTempDir("0"))));
 		
-		JRedisConnector.getInstance();
+		JRedisConnectorImpl.getInstance();
 	}
 	
 	public static void main(String args[])

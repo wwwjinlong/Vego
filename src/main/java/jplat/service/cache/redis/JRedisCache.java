@@ -1,7 +1,7 @@
 package jplat.service.cache.redis;
 
 import jplat.base.constant.KPlatResponseCode;
-import jplat.core.cache.redis.JRedisConnector;
+import jplat.core.cache.redis.JRedisConnectorImpl;
 import jplat.core.session.redis.JRedisSession;
 import jplat.error.exception.JSystemException;
 import jplat.service.cache.JICrossCache;
@@ -29,7 +29,7 @@ public class JRedisCache implements JICrossCache
 	private String cacheKey;
 	private boolean isNew = true;			//only create use this field.
 
-	private JRedisConnector connector = JRedisConnector.getInstance();
+	private JRedisConnectorImpl connector = JRedisConnectorImpl.getInstance();
 	
 	public JRedisCache( boolean createNew ) throws JSystemException
 	{
@@ -53,7 +53,7 @@ public class JRedisCache implements JICrossCache
 		
 		if ( createNew )
 		{
-			if( connector.hset(cacheKey,K_CREATE_TIME,DateUtil.todayStr(DateUtil.FMT_ALL),time_out) == JRedisConnector.EX_OLD )
+			if( connector.hset(cacheKey,K_CREATE_TIME,DateUtil.todayStr(DateUtil.FMT_ALL),time_out) == JRedisConnectorImpl.EX_OLD )
 			{
 				isNew = false;
 				logger.info(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_REDIS, KTraceLog.EVENT_POINT, "", JTraceLogUtils.buildUserData("cache exists,but create.",cacheKey)));

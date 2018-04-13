@@ -6,102 +6,50 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jplat.tools.coder.JsonCoder;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.string.JRandomUtil;
-import jplat.tools.string.JStringUtil;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
+import z.log.tracelog.JLog;
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import z.log.tracelog.JLog;
 
-public class JRedisConnector
+public class JRedisConnectorImpl extends JIRedisConnector
 {
-	public static long FAIL = -1;		//失败。
-
-	public static long EX_NEW = 1;		//新值.
-	public static long EX_OLD = 0;		//老值.
-	
-	public static final String REDIS_RET_OK = "OK";
-
-	private static Logger logger = LoggerFactory.getLogger(JRedisConnector.class);
-	
-	public String password;
+	private static Logger logger = LoggerFactory.getLogger(JRedisConnectorImpl.class);
 	
 	private JedisPool redisPool;
 	
-	//auth password.
-	boolean validatePass = false;
-	
-	//print trace log.
-	public boolean logOn = false;
-
-	private JRedisConnector()
+	private JRedisConnectorImpl()
 	{
 		init();
 	}
 	
 	private boolean init()
 	{
-
-		//这里还是依赖了Spring哦.
-		//		QConfig qconfig = AppContextHolder.getContext().getBean(QConfig.class);
-		JLog.loginit("REDIS_POOL_INIT start");
-		
-		String server = null;
-		int port=0,maxConn=0,minIdle=0, maxWaitMills=0,timeout=0;
-
-//		ResourceBundle resBundle = ResourceBundle.getBundle("conf/redis_conf");
-		server = JAppConfig.getConfigCache().REDIS_SERVER;
-		port = JAppConfig.getConfigCache().REDIS_PORT;
-//		timeout = JAppConfig.getConfigCache().REDIS_CONNECT_TIME_OUT;
-
-		maxWaitMills = JAppConfig.getConfigCache().REDIS_MAX_WAIT_MILLIS;
-		maxConn = JAppConfig.getConfigCache().REDIS_MAX_CONNECT;
-		minIdle = JAppConfig.getConfigCache().REDIS_MIN_IDLE;
-		password = JAppConfig.getConfigCache().REDIS_PASSWORD;
-		
-		//print the monitor log or not.
-		logOn = JAppConfig.getConfigCache().REDIS_LOGON;
-
-		JedisPoolConfig config = new JedisPoolConfig();
-		//		config.setBlockWhenExhausted(true);
-		config.setMaxTotal(maxConn);
-		config.setMinIdle(minIdle);
-		config.setMaxWaitMillis(maxWaitMills);
-		
-		//5000ms超时是可以，默认是2000
-		redisPool = new JedisPool(config,server,port,timeout);
-		if ( JStringUtil.isNotEmpty(password) )
-		{
-			validatePass = true;
-		}
-		else
-		{
-			password = "";
-		}
+		redisPool = new JedisPool(poolConfig,JAppConfig.getConfigCache().REDIS_SERVER,
+					JAppConfig.getConfigCache().REDIS_PORT,JAppConfig.getConfigCache().REDIS_CONNECT_TIME_OUT);
 		
 		JLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_SUCCESS, "none",
-				JTraceLogUtils.buildUserData("REDIS_POOL_INIT",server,""+port,password,""+timeout,JsonCoder.toJsonString(config))));
+				JTraceLogUtils.buildUserData("JRedisConnectorImpl",JAppConfig.getConfigCache().REDIS_SERVER,
+						""+JAppConfig.getConfigCache().REDIS_PORT,""+JAppConfig.getConfigCache().REDIS_CONNECT_TIME_OUT)));
 				
 		return true;
-	
 	}
 
 	private static final class Holder
 	{
-		private static final JRedisConnector  connector = new JRedisConnector();
+		private static final JRedisConnectorImpl  connector = new JRedisConnectorImpl();
 	}
 
-	public static JRedisConnector getInstance()
+	public static JRedisConnectorImpl getInstance()
 	{
 		return Holder.connector;
 	}
@@ -120,7 +68,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -158,7 +106,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -194,7 +142,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -240,7 +188,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -312,7 +260,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -375,7 +323,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -409,7 +357,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -458,7 +406,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -528,7 +476,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -594,7 +542,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -661,7 +609,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -745,7 +693,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -798,7 +746,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -853,7 +801,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -915,7 +863,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -924,7 +872,7 @@ public class JRedisConnector
 		}
 		catch ( Exception e)
 		{
-			// TODO Auto-generated catch block
+			// password != null
 			success=false;
 			e.printStackTrace();
 		}
@@ -964,7 +912,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -1007,7 +955,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -1057,7 +1005,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -1100,7 +1048,7 @@ public class JRedisConnector
 		try
 		{
 			jedis = redisPool.getResource();
-			if ( validatePass )
+			if ( password != null )
 			{
 				jedis.auth(password);
 			}
@@ -1127,41 +1075,5 @@ public class JRedisConnector
 		}
 
 		return FAIL;
-	}
-
-	/*************
-	 * 			FIHISH
-	 * 				*************/
-
-	public static void main(String[] args )
-	{/*
-		JRedisConnector connector = JRedisConnector.getInstance();
-		connector.testRedis2();
-	*/
-//		testRedis3();
-		testConcurrent();
-	}
-	
-	private static void testConcurrent()
-	{
-		for ( int i = 0; i < 2; ++i )
-		{
-			new Thread()
-			{
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					int max = 2;
-					while ( --max > 0 )
-					{
-						String key = "K_"+JRandomUtil.getUUID();
-						String value = "V_"+JRandomUtil.getRandomSequence(512);
-						
-						JRedisConnector.getInstance().hset(key,"userInfo",value,300);
-//						logger.info("STR:"+JRedisConnector.getInstance().hget(key,"userInfo"));
-					}
-				}
-			}.start();
-		}
 	}
 }
