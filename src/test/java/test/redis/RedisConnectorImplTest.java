@@ -3,7 +3,7 @@ package test.redis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jplat.core.cache.redis.JRedisConnectorImpl;
+import jplat.base.cache.redis.JRedisConnectorImpl;
 import jplat.tools.string.JRandomUtil;
 
 public class RedisConnectorImplTest

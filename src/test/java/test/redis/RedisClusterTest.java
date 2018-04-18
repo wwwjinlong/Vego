@@ -3,13 +3,15 @@ package test.redis;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import jplat.core.cache.redis.JRedisClusterConnectorImpl;
+import jplat.base.cache.redis.JRedisClusterConnectorImpl;
 import jplat.error.exception.JSystemException;
 import jplat.error.exception.JTransException;
 import jplat.tools.string.JStringUtil;
@@ -54,16 +56,12 @@ public class RedisClusterTest {
 	public static void testMemoryOverflow()
 	{
 		JRedisClusterConnectorImpl cluIns  = JRedisClusterConnectorImpl.getInstance();
-		try {
-			JedisCluster jc = cluIns.getCluster();
-			jc.set("k11", "v11");
+		JedisCluster jc = cluIns.getCluster();
+		jc.set("k11", "v11");
 
-			JLog.logerr(jc.get("k11"));
+		JLog.logerr(jc.get("k11"));
 
-		} catch (JSystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 
 		//多线程测试
 		for ( int i = 0;i < 3000; ++i )
@@ -76,12 +74,7 @@ public class RedisClusterTest {
 							// TODO Auto-generated method stub
 							JRedisClusterConnectorImpl cluIns  = JRedisClusterConnectorImpl.getInstance();
 							JedisCluster jc = null;
-							try {
-								jc = cluIns.getCluster();
-							} catch (JSystemException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							jc = cluIns.getCluster();
 							for ( int i = 0;i < 300000; ++i )
 							{
 								JTimeCounter counter = new JTimeCounter();
@@ -103,9 +96,44 @@ public class RedisClusterTest {
 
 	}
 	
+	public static void testMap()
+	{
+		Map<Integer,String> cacheMap = new ConcurrentHashMap<Integer,String>();
+		for ( int i = 0; i < 10; ++i )
+		{
+			cacheMap.put(i, "value:"+i);
+		}
+		
+		for ( int i = 0; i < 10; ++i )
+		{
+			JLog.log("[%d][%s]", i,cacheMap.get(i));
+		}
+		
+	}
+	
+	public static void testThread()
+	{
+		//多线程测试
+		for ( int i = 0;i < 3000; ++i )
+		{
+			new Thread(
+					new Runnable() {
+						@Override
+						public void run() {
+							long num = 0x1L;
+						}
+					}
+					).start();
+		}
+	}
+	
 	public static void main( String args[] )
 	{
-		testMemoryOverflow();
+		long num = 0x1L;
+		long num1 = 0x11L;
+		
+		long v = num & num1;
+		JLog.log("[%d]", v);
 	}
 
 }

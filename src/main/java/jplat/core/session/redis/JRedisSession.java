@@ -5,8 +5,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jplat.base.cache.redis.JRedisConnectorImpl;
 import jplat.base.constant.KPlatResponseCode;
-import jplat.core.cache.redis.JRedisConnectorImpl;
 import jplat.core.session.JSession;
 import jplat.core.session.JSessionUtils;
 import jplat.core.trans.JIUserInfo;

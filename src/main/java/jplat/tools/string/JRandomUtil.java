@@ -66,7 +66,7 @@ public class JRandomUtil {
 	 */
 	public static String getStrongRandomSequence(int length)
 	{
-		StringBuffer strBuffer = new StringBuffer(length);
+		StringBuilder strBuffer = new StringBuilder(length);
 		
 		int pieceLen = 4;
 		for ( int i = 0; i < length; i += 4)

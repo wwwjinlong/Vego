@@ -1,4 +1,4 @@
-package jplat.core.cache.redis;
+package jplat.base.cache.redis;
 
 import java.util.Map;
 

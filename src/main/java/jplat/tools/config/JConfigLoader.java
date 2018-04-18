@@ -2,7 +2,7 @@ package jplat.tools.config;
 
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
-import jplat.core.cache.redis.JRedisConnectorImpl;
+import jplat.base.cache.redis.JRedisConnectorImpl;
 import z.log.tracelog.JLog;
 
 /**

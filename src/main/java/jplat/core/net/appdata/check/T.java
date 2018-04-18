@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import z.log.tracelog.JLog;
-import jplat.core.cache.redis.JRedisConnectorImpl;
+import jplat.base.cache.redis.JRedisConnectorImpl;
 import jplat.tools.string.JDateUtil;
 
 public class T {

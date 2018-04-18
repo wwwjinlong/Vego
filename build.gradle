@@ -55,6 +55,9 @@ processResources {
     from('src/main/java') {
         include '**/*.xml'
         include '**/*.properties'
+        include '**/*.json'
+        include '**/*.port'
+        include '**/*.txt'
     }
 }
 

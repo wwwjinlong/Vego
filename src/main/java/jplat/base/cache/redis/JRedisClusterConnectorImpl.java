@@ -1,19 +1,19 @@
-package jplat.core.cache.redis;
+package jplat.base.cache.redis;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jplat.base.constant.KPlatResponseCode;
 import jplat.error.exception.JSystemException;
-import jplat.tools.coder.JsonCoder;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.string.JStringUtil;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.JedisPoolConfig;
 import z.log.tracelog.JLog;
 import z.log.tracelog.JTraceLogUtils;
 import z.log.tracelog.KTraceLog;
@@ -24,6 +24,11 @@ public class JRedisClusterConnectorImpl extends JIRedisConnector
 	
 	private int connTimeout = 5000;
 	private int redirect = 5;
+	
+	//not elastic
+	private JedisCluster jedisCluster;
+	
+	private Map<Integer,JedisCluster> cacheMap = new ConcurrentHashMap<Integer,JedisCluster>();
 
 	private JRedisClusterConnectorImpl()
 	{
@@ -33,6 +38,7 @@ public class JRedisClusterConnectorImpl extends JIRedisConnector
 			// TODO Auto-generated catch block
 			//			e.printStackTrace();
 			JTraceLogUtils.getExceptionFullLog(e, JAppConfig.getConfigCache().LOG_TRACE_CNT, true);
+			throw new RuntimeException("JRedisClusterConnectorImpl init failed.");
 		}
 	}
 
@@ -51,10 +57,11 @@ public class JRedisClusterConnectorImpl extends JIRedisConnector
 		connTimeout = JAppConfig.getConfigCache().REDIS_CONNECT_TIME_OUT;
 		redirect = JAppConfig.getConfigCache().REDIS_REDIRECT;
 		
+		jedisCluster = new JedisCluster( getHosts(), connTimeout, connTimeout, redirect, poolConfig );
+		
 		/********* 获取集群服务器  **********/
 		JLog.log(JTraceLogUtils.getTraceLog(KTraceLog.ACTION_JINIT, KTraceLog.EVENT_SUCCESS, "none",
 				JTraceLogUtils.buildUserData("REDIS_INIT","clusters="+JAppConfig.getConfigCache().REDIS_CLUSTER)));
-
 		return true;
 	}
 
@@ -65,9 +72,9 @@ public class JRedisClusterConnectorImpl extends JIRedisConnector
 	 * @return
 	 * @throws JSystemException
 	 */
-	public JedisCluster getCluster() throws JSystemException
+	public JedisCluster getCluster()
 	{
-		return new JedisCluster( getHosts(), connTimeout, connTimeout, redirect, poolConfig );
+		return jedisCluster;
 	}
 
 	/**
@@ -102,25 +109,50 @@ public class JRedisClusterConnectorImpl extends JIRedisConnector
 	@Override
 	public boolean set(String key, String value) {
 		// TODO Auto-generated method stub
-		return false;
+		
+		JedisCluster jc = getCluster();
+		
+		String retMsg = jc.set(key, value);
+		if ( !REDIS_RET_OK.equals(retMsg) )
+		{
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override
 	public String get(String key) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		JedisCluster jc = getCluster();
+		
+		return jc.get(key);
 	}
 
 	@Override
 	public long del(String key) {
 		// TODO Auto-generated method stub
-		return 0;
+		
+		JedisCluster jc = getCluster();
+		
+		return jc.del(key);
 	}
 
 	@Override
-	public boolean set(String key, String value, int timeOutSec) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean set(String key, String value, int timeOutSec)
+	{
+		boolean success = true;
+		JedisCluster jc = getCluster();
+		
+		String retMsg = jc.setex(key, timeOutSec, value);
+		if ( !REDIS_RET_OK.equals(retMsg))
+		{
+			success = false;
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override

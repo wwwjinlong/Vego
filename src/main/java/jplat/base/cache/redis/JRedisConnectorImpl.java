@@ -1,4 +1,4 @@
-package jplat.core.cache.redis;
+package jplat.base.cache.redis;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -184,7 +184,7 @@ public class JRedisConnectorImpl extends JIRedisConnector
 		}
 
 		Jedis jedis = null;
-		Pipeline pl = null;
+//		Pipeline pl = null;
 		try
 		{
 			jedis = redisPool.getResource();
@@ -192,21 +192,23 @@ public class JRedisConnectorImpl extends JIRedisConnector
 			{
 				jedis.auth(password);
 			}
-
-			pl = jedis.pipelined();
-			Response<String> response = pl.set(key, value);
-			pl.expire(key, timeOutSec );
-			pl.sync();
+			
+			String retMsg = jedis.setex(key, timeOutSec, value);
+			
+//			pl = jedis.pipelined();
+//			Response<String> response = pl.set(key, value);
+//			pl.expire(key, timeOutSec );
+//			pl.sync();
 
 			//			pl.close();
 			//			jedis.close();
-			if ( !REDIS_RET_OK.equals(response.get()))
+			if ( !REDIS_RET_OK.equals(retMsg))
 			{
 				success = false;
 				return false;
 			}
 		}
-		catch ( Exception e)
+		catch ( Exception e )
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -219,7 +221,7 @@ public class JRedisConnectorImpl extends JIRedisConnector
 				logger.info(JTraceLogUtils.getEndTraceLog(KTraceLog.ACTION_REDIS, mark, JTraceLogUtils.buildUserData("set",key,""+success) ));
 			}
 
-			if ( pl != null )
+/*			if ( pl != null )
 			{
 				try {
 					pl.close();
@@ -227,7 +229,7 @@ public class JRedisConnectorImpl extends JIRedisConnector
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+			}*/
 
 			if ( jedis != null )
 			{
