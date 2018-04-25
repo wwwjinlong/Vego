@@ -1,0 +1,12 @@
+{
+    "justMark": "将模块代号全部放在这里进行汇总",
+    
+    "modules": [
+         {
+         	"mdlCode": "chk",
+         	"mdlDesc": "平台服务监控监测模块",
+         	"developer": "zhangcq",
+         	"relDate":"20180425" 
+        },
+    ]
+}

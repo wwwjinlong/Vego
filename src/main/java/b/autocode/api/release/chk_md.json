@@ -1,0 +1,10 @@
+{
+    "developer":"zhangcq",
+    "moduleName": "测试模块",
+    "services": [
+     	{
+            "chName": "平台服务健康监测服务",
+            "serviceCode": "HealthChecker"
+        },
+    ]
+}
