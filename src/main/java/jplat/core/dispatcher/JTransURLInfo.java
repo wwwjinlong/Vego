@@ -11,6 +11,7 @@ import jplat.error.exception.JSystemException;
 import jplat.error.exception.JTransException;
 import jplat.tools.config.JAppConfig;
 import jplat.tools.string.JStringUtil;
+import z.log.tracelog.JTraceLogUtils;
 
 public class JTransURLInfo
 {
@@ -75,7 +76,7 @@ public class JTransURLInfo
 			return Class.forName(clzName);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();			//生产不应该打印该日志.
+			logger.error(JTraceLogUtils.getExceptionFullLog(e, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
 			throw new JSystemException(KPlatResponseCode.CD_INPUT_UNAVAIABLE,"无请求对应地址404.");
 		}
 	}

@@ -18,7 +18,5 @@ public class ExceptionTestCtrl extends JAppBaseService
 	{
 		JAppContext appCtx = serviceFactory.buildAppContext(request, response, false);
 		appCtx.failSystemException("9999", "异常测试");
-		
-//		appParser.doAppPack(null);
 	}
 }

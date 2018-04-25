@@ -34,7 +34,7 @@ public abstract class JAppBaseService
 	public String execJTransExceptionHandler( JTransException transException, HttpServletResponse response )
 	{
 		//JTransInfo 中已打印该异常.
-//		logger.error(JTraceLogUtils.getExceptionFullLog(transException, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
+		logger.error(JTraceLogUtils.getExceptionFullLog(transException, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
 		return JAppLogUtils.buildErrMessage(transException,response );
 	}
 	

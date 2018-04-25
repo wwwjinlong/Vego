@@ -113,7 +113,7 @@
 								<td>&nbsp;</td>
 							</c:if>
 							<td>${item1.chName}</td>
-							<td>${item.desc}</td>
+							<td>${item1.desc}</td>
 						</tr>
 					</c:forEach>
 					<tr>
@@ -161,7 +161,7 @@
 								<td>&nbsp;</td>
 							</c:if>
 							<td>${item1.chName}</td>
-							<td>${item.desc}</td>
+							<td>${item1.desc}</td>
 						</tr>
 					</c:forEach>
 					<tr>

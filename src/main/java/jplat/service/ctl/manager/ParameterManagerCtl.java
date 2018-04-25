@@ -17,9 +17,9 @@ import jplat.tools.config.JAppConfig;
 import jplat.tools.config.JConfigManager;
 
 @Controller
-public class ParaManagerCtl
+public class ParameterManagerCtl
 {
-	private Logger logger = LoggerFactory.getLogger(ParaManagerCtl.class);
+	private Logger logger = LoggerFactory.getLogger(ParameterManagerCtl.class);
 	
 	@RequestMapping("/mgr/config/reload.do")
 	@ResponseBody
