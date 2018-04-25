@@ -1,6 +1,7 @@
 package jplat.service.trans.health;
 
 import jplat.core.trans.JAppContext;
+import jplat.error.exception.JTransException;
 import jplat.service.ctl.test.model.HealthReqModel;
 import jplat.service.ctl.test.model.HealthRspModel;
 import jplat.tools.config.JAppConfig;
@@ -24,5 +25,15 @@ public class HealthCheckerTrans
 		rspModel.setIpAddr(JStringUtil.getLocalIP());
 		rspModel.setRetMsg("pong");
 		rspModel.setYourMsg(reqModel.getMsg());
+	}
+	
+	public void testext( JAppContext appCtx ) throws JTransException
+	{
+		throw new JTransException("0001","some JTransException error happened!");
+	}
+	
+	public void testexr( JAppContext appCtx )
+	{
+		throw new RuntimeException("0002 Runtime some error happened!");
 	}
 }

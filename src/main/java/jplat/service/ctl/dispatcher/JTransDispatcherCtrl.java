@@ -6,22 +6,24 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jplat.base.constant.KPlatResponseCode;
-import jplat.core.dispatcher.JTransCache;
-import jplat.core.dispatcher.JTransInfo;
-import jplat.core.dispatcher.JTransURLInfo;
-import jplat.core.framework.config.AppServletContextHolder;
-import jplat.core.trans.JAppBaseService;
-import jplat.core.trans.impl.JServletAppContext;
-import jplat.error.exception.JSystemException;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import z.log.tracelog.JLog;
+import jplat.base.constant.KPlatResponseCode;
+import jplat.core.dispatcher.JTransCache;
+import jplat.core.dispatcher.JTransInfo;
+import jplat.core.dispatcher.JTransURLInfo;
+import jplat.core.trans.JAppBaseService;
+import jplat.core.trans.impl.JServletAppContext;
+import jplat.error.exception.JSystemException;
+import jplat.error.exception.JTransException;
+import jplat.tools.config.JAppConfig;
+import z.log.tracelog.JTraceLogUtils;
 
 /**
  * 该类用于将url按照规则映射到类名，用于解决对不同渠道的相同接口复用的问题.
@@ -34,6 +36,8 @@ import z.log.tracelog.JLog;
 //@RequestMapping("/test157")
 public class JTransDispatcherCtrl extends JAppBaseService
 {
+	private Logger logger = LoggerFactory.getLogger(JTransDispatcherCtrl.class);
+	
 	private JTransCache transCache = JTransCache.getInstance();
 	
 	/**
@@ -43,10 +47,11 @@ public class JTransDispatcherCtrl extends JAppBaseService
 	 * @param clazzName	 类名.
 	 * @param methodName 方法名.
 	 * @throws JSystemException 
+	 * @throws JTransException 
 	 */
 	@RequestMapping("/json2/{moduleCode}/{clazzName}/{methodName}.do")
 	public void doDispatchJson( HttpServletRequest request,HttpServletResponse response,
-			@PathVariable String moduleCode, @PathVariable String clazzName, @PathVariable String methodName ) throws JSystemException
+			@PathVariable String moduleCode, @PathVariable String clazzName, @PathVariable String methodName ) throws JSystemException, JTransException
 	{
 		callTransImpl0(request,response,moduleCode,clazzName,methodName);
 	}
@@ -61,9 +66,10 @@ public class JTransDispatcherCtrl extends JAppBaseService
 	 * @param clazzName
 	 * @param methodName
 	 * @throws JSystemException
+	 * @throws JTransException 
 	 */
 	private void callTransImpl0( HttpServletRequest request,HttpServletResponse response,
-			String moduleCode, String clazzName, String methodName ) throws JSystemException
+			String moduleCode, String clazzName, String methodName ) throws JSystemException, JTransException
 	{
 		//获取springMVC的上下文.
 //		ApplicationContext springMVCCtx = AppServletContextHolder.getContext();
@@ -103,10 +109,11 @@ public class JTransDispatcherCtrl extends JAppBaseService
 				paraList.add(rspBody);
 				appCtx.setRspBody(rspBody);
 			}
-			catch (InstantiationException | IllegalAccessException e)
+			catch ( InstantiationException | IllegalAccessException e)
 			{
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+//				e.printStackTrace();
+				logger.error(JTraceLogUtils.getExceptionFullLog(e, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
 				throw new JSystemException(KPlatResponseCode.CD_FRAMEWORK_ERR,KPlatResponseCode.MSG_FRAMEWORK_ERR);
 			}
 		}

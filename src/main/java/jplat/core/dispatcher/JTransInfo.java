@@ -4,8 +4,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jplat.base.constant.KPlatResponseCode;
+import jplat.error.exception.JBaseException;
 import jplat.error.exception.JSystemException;
+import jplat.error.exception.JTransException;
+import jplat.tools.config.JAppConfig;
+import z.log.tracelog.JTraceLogUtils;
 
 /**
  * 类型,方法,参数元信息.
@@ -14,6 +21,8 @@ import jplat.error.exception.JSystemException;
  */
 public class JTransInfo
 {
+	private static Logger logger = LoggerFactory.getLogger(JTransInfo.class);
+	
 	public static final String REQ_MODEL = "ReqModel";
 	public static final String RSP_MODEL = "RspModel";
 
@@ -73,18 +82,37 @@ public class JTransInfo
 		return rspClass;
 	}
 	
-	public void invokeTrans( Object ...args ) throws JSystemException
+	public void invokeTrans( Object ...args ) throws JTransException
 	{
 		callCnt++;					//not thread safe but it does not matter,I think.
 		lastCallDate = new Date();
 		
-		try {
+		try
+		{
 			actionMethod.invoke(actionObj, args);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
+		}
+		catch ( IllegalAccessException | IllegalArgumentException e )
+		{
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new JSystemException(KPlatResponseCode.CD_FRAMEWORK_ERR,KPlatResponseCode.MSG_FRAMEWORK_ERR);
+//			e.printStackTrace();
+			logger.error(JTraceLogUtils.getExceptionFullLog(e, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
+			
+			throw new JTransException(KPlatResponseCode.CD_FRAMEWORK_ERR,KPlatResponseCode.MSG_FRAMEWORK_ERR);
+		}
+		catch (InvocationTargetException e)
+		{
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			logger.error(JTraceLogUtils.getExceptionFullLog(e, JAppConfig.getConfigCache().LOG_TRACE_CNT, true));
+			
+			Throwable te = e.getTargetException();
+			if ( te != null && ( te instanceof JTransException || te instanceof JSystemException ) )
+			{
+				JBaseException tbe = (JBaseException)te;
+				throw new JTransException(tbe.getErrCode(),tbe.getErrMsg());
+			}
+			
+			throw new JTransException(KPlatResponseCode.CD_FRAMEWORK_ERR,KPlatResponseCode.MSG_FRAMEWORK_ERR);
 		}
 	}
 }

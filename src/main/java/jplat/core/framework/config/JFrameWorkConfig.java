@@ -13,5 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "jplat.api.rel.controller" )  
 public class JFrameWorkConfig
 {
-	
+	public JFrameWorkConfig()
+	{
+		System.err.println("JFrameWorkConfig constructor.");
+	}
 }
